@@ -1,0 +1,13 @@
+<header>
+	<h1>My tasks</h1>
+	<p><strong>[count(done)]</strong> done out of <strong>[count(task)]</strong> total</p>
+</header>
+<ul>
+	<li property="task" mv-multiple>
+		<input property="done" type="checkbox" id="test[$index]" />
+		<label property="taskTitle" for="test[$index]" >Do stuff</label>
+	</li>
+</ul>
+
+
+
