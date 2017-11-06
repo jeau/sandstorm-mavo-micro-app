@@ -37,14 +37,17 @@ foreach (scandir("pages") as $file) {
 		<script src="https://get.mavo.io/mavo.js"></script>
 		<script src="mavo-php.js"></script>
 		<link rel="stylesheet" href="https://get.mavo.io/mavo.css">
+		<link rel="stylesheet" href="https://cdn.concisecss.com/concise.min.css">
 	</head>
 	<body>
 		<main mv-app="grain" mv-storage-type="php" <?php echo $attributes; ?> container>
 			<?php echo $html ; ?>
 		</main>
-		<p><?php echo $current_link . " — pages : " . $menu ;?></p>
-    <form action="/index.php">
-  		<p>Create a new page : <input type="text" name="page" ></p>
-    </form>
+		<footer container>
+			<p><?php echo $current_link . " — pages : " . $menu ;?></p>
+    			<form action="/index.php">
+  				<p>Create a new page : <input type="text" name="page" ></p>
+    			</form>
+		</footer>
 	</body>
 </html>

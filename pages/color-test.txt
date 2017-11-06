@@ -1,9 +1,9 @@
 <p>Making a bare-bones HSL color picker with Mavo expressions:</p>
 
 <div style="background-color: [color]">
-	<input type="range" property="hue" max="360" />
-	<input type="range" property="saturation" />
-	<input type="range" property="lightness" />
+	hue : <input type="range" property="hue" max="360" /><br />
+	saturation : <input type="range" property="saturation" /><br />
+	lightness : <input type="range" property="lightness" />
 <br />
 
 	<input property="color" value="hsl([hue], [saturation]%, [lightness]%)" readonly />
