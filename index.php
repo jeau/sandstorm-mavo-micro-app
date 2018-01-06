@@ -16,7 +16,7 @@ if (!empty($sandstormHeaders['X-Sandstorm-User-Id'])) {
 }
 
 $do = (isset($_GET['do'])) ? $_GET['do'] : "" ;
-$currentPage = 'index';
+$currentPage = 'home';
 
 if (($do == 'create') && isset($_GET['page']) && ($userRole == 'admin')) {
         $currentPage = preg_replace('/[^A-Za-z0-9-]+/', '-', $_GET['page']);
@@ -55,7 +55,7 @@ if ($userRole == 'admin' ) {
         break;
     case "publish":
         publishStaticImages();
-        publishStaticPage('index');
+        publishStaticPage('home');
         foreach (pagesList() as $item) {
             publishStaticPage($item);
         }
@@ -156,7 +156,7 @@ function renderMenu($static=false) {
         $urlPageKey = (!$static) ? '?page=' : "";
         $extensionPage = ($static) ? '.html' : "";
         $menu_app .= '<ul class="breadcrumb-nav">';
-        $active = ($currentPage == 'index') ? ' -active' : '';
+        $active = ($currentPage == 'home') ? ' -active' : '';
         $menu_app .= '<li class="item' . $active . '">';
         $menu_app .= '<a href="' . $urlPageKey . 'index' . $extensionPage . '"><i class="fa fa-home"></i></a></li>';
         foreach (pagesList() as $item) {
@@ -249,7 +249,7 @@ function pagesList() {
     $result = array();
     foreach (scandir("repo/pages") as $dir) {
         $item = pathinfo($dir)['filename'];
-        if  (!(empty($item) || $item == "." || $item == "index")) array_push($result, $item);
+        if  (!(empty($item) || $item == "." || $item == "home")) array_push($result, $item);
     }
     return $result;
 }

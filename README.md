@@ -27,7 +27,7 @@ Micro-app template
             - `data.json` — mavo data of the page
         - ...
 
-So, this micro-app could be interpreted possibly in other context.
+So, this micro-app could be interpreted and edited possibly in other context.
 
 ## Features
 

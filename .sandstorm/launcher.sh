@@ -38,8 +38,12 @@ if [ ! -L "/var/mavo/images" ]; then
     ln -s /var/mavo/repo/images /var/mavo/images
 fi
 
-if [ ! -d "/var/mavo/repo" ]; then
-    rsync -r /opt/app/repo/ /var/mavo/repo
+if [ ! -d "/var/mavo/content" ]; then
+    rsync -r /opt/app/content/ /var/mavo/content
+fi
+
+if [ ! -L "/var/mavo/repo" ]; then
+    ln -s /var/mavo/content/default /var/mavo/repo
 fi
 
 cd /var/mavo
