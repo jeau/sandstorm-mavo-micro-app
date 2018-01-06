@@ -1,63 +1,52 @@
 #!/bin/bash
 set -euo pipefail
-# This script is run every time an instance of our app - aka grain - starts up.
-# This is the entry point for your application both when a grain is first launched
-# and when a grain resumes after being previously shut down.
-#
-# This script is responsible for launching everything your app needs to run.  The
-# thing it should do *last* is:
-#
-#   * Start a process in the foreground listening on port 8000 for HTTP requests.
-#
 
+# Create a bunch of folders under the clean /var that php and nginx expect to exist
 mkdir -p /var/lib/php5/sessions
 
+# Wipe /var/run, since pidfiles and socket files from previous launches should go away
+rm -rf /var/run
+mkdir -p /var/run
+
+# Mavo
+
 mkdir -p /var/mavo
+mkdir -p /var/www
+mkdir -p /var/www/images
 
 if [ ! -L "/var/mavo/index.php" ]; then
-	ln -s /opt/app/index.php /var/mavo/index.php
+    ln -s /opt/app/index.php /var/mavo/index.php
 fi
 
 if [ ! -L "/var/mavo/mavo-php.js" ]; then
-	ln -s /opt/app/mavo-php.js /var/mavo/mavo-php.js
+    ln -s /opt/app/mavo-php.js /var/mavo/mavo-php.js
 fi
 
 if [ ! -L "/var/mavo/mavo-backend.php" ]; then
-	ln -s /opt/app/mavo-backend.php /var/mavo/mavo-backend.php
+    ln -s /opt/app/mavo-backend.php /var/mavo/mavo-backend.php
 fi
 
-if [ ! -d "/var/mavo/images" ]; then
-	mkdir -p /var/mavo/images
+if [ ! -L "/var/mavo/publish.php" ]; then
+    ln -s /opt/app/publish.php /var/mavo/publish.php
 fi
 
-cp /opt/app/images/* /var/mavo/images
+if [ ! -L "/var/mavo/include" ]; then
+    ln -s /opt/app/include /var/mavo/include
+fi
 
-if [ ! -d "/var/mavo/pages" ]; then
-	mkdir -p /var/mavo/pages
-	cp /opt/app/pages/* /var/mavo/pages
+if [ ! -L "/var/mavo/images" ]; then
+    ln -s /var/mavo/repo/images /var/mavo/images
+fi
+
+if [ ! -d "/var/mavo/repo" ]; then
+    rsync -r /opt/app/repo/ /var/mavo/repo
 fi
 
 cd /var/mavo
 
+#
+#   * Start a process in the foreground listening on port 8000 for HTTP requests.
+
 php -S 127.0.0.1:8000
 
-# This is how you indicate to the platform that your application is up and
-# ready to receive requests.  Often, this will be something like nginx serving
-# static files and reverse proxying for some other dynamic backend service.
-#
-# Other things you probably want to do in this script include:
-#
-#   * Building folder structures in /var.  /var is the only non-tmpfs folder
-#     mounted read-write in the sandbox, and when a grain is first launched, it
-#     will start out empty.  It will persist between runs of the same grain, but
-#     be unique per app instance.  That is, two instances of the same app have
-#     separate instances of /var.
-#   * Preparing a database and running migrations.  As your package changes
-#     over time and you release updates, you will need to deal with migrating
-#     data from previous schema versions to new ones, since users should not have
-#     to think about such things.
-#   * Launching other daemons your app needs (e.g. mysqld, redis-server, etc.)
-
-# By default, this script does nothing.  You'll have to modify it as
-# appropriate for your application.
 exit 0

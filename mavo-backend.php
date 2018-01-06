@@ -5,7 +5,7 @@
     $finalData = array();
 
     //Globally adding the logged state
-        $isLogged = true;	
+    $isLogged = true;	
     
     //Function to know if local file exists, or if it can be created
     function data_exists ($filePath = '') {
