@@ -72,3 +72,4 @@ This application uses the following libraries:
 
 - manage configuration parameters
 - import / export micro-apps 
+- replace the php internal web server by a serious one 
