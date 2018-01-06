@@ -227,8 +227,8 @@ function publishStaticPage($page) {
         '<header container>' . renderMenu('static') . '</header>' . "\n".
         '<main mv-app="static" mv-storage="'. $page . '.json" mv-bar="none" container>' .  $content . "</main>\n".
         "</body>\n</html>\n";
-    file_put_contents('/var/www/' . $page . '.html', $static, LOCK_EX);
     file_put_contents('/var/www/' . $page . '.json', $data, LOCK_EX);
+    file_put_contents('/var/www/' . (($page == "home") ? "index" : $page) . '.html', $static, LOCK_EX);
 }
 
 function publishStaticImages() {
