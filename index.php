@@ -141,10 +141,9 @@ function renderAdminMenu() {
         if (!$do == "edit") $result .= editPageButton();
         $result .= addPageButton();
         if (count(pagesList()) > 0) $result .= delPageButton() ; 
-        $result .= '<li><h2>APP</h2></li>';
+        $result .= '<li><h2>MICRO-APP</h2></li>';
         $result .= ($isPublic == 'true') ? unPublishPublicSiteButton() : publishPublicSiteButton();
         $result .= configAppButton();
-        $result .= '<li><a href="?do=config">import / export</a></li>';
         $result .= '</ul></div>';
         return $result;
     }
