@@ -33,9 +33,9 @@ So, this micro-app could be interpreted and edited possibly in other context.
 
 For each each Sandstorm grain :
 
-    - admin grain can edit, create and delete pages ; publish and unpublish static pages
-    - editor can update data with mavo interface
-    - viewer can view pages
+- admin grain can edit, create and delete pages ; publish and unpublish static pages
+- editor can update data with mavo interface
+- viewer can view pages
 
 ## Developing
 
@@ -70,4 +70,5 @@ This application uses the following libraries:
 
 ## TODO
 
+- manage configuration parameters
 - import / export micro-apps 
