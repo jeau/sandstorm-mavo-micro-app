@@ -19,7 +19,7 @@ Micro-app template
     - `config.yaml` — config data from `config.html`  
     - `images` — directory for multimedia uploads from the pages  
     - `pages` — directory for pages (one sub-directory per page) 
-        - `index` — home page of the micro-application, can't be deleted 
+        - `home` — home page of the micro-application, can't be deleted 
             - `body.html` — content of the page    
             - `data.json` — mavo data of the page
         - `page` — a second page with the same sub-structure
