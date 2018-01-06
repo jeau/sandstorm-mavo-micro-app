@@ -99,8 +99,10 @@ opt/app/.sandstorm/launcher.sh
 opt/app/images
 opt/app/include/css/concise-wrapper.min.css
 opt/app/include/css/menu.css
+opt/app/include/css/style.css
 opt/app/include/js/mavo-php.js
 opt/app/include/js/mavo-yaml.js
+opt/app/include/js/microlight.js
 opt/app/include/php/spyc.php
 opt/app/index.php
 opt/app/mavo-backend.php

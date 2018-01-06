@@ -37,7 +37,7 @@ if ($userRole == 'admin' ) {
     case "edit":
         $attributes = 'mv-format="text" mv-storage="' . content($currentPage) . '"';
         $html = '<h1>Edit <i>' . $currentPage . '</i></h1>' . "\n";
-        $html .= '<textarea property="code" rows="30" cols="80" ></textarea>';
+        $html .= '<textarea property="code" rows="30" cols="80"></textarea>';
         break;
     case "config":
         $attributes = ' mv-plugins="yaml" mv-format="yaml" mv-storage="' . $configStorageFile . '"';
@@ -60,13 +60,13 @@ if ($userRole == 'admin' ) {
             publishStaticPage($item);
         }
         $isPublic = 'true';
-        $html = "<h1>Site publié</h1>\n";
+        $html = "<h1>Static web site</h1>\n";
         $html .= publishingInfos();
         break;
     case "unpublish":
         array_map('unlink', glob('/var/www/*'));
         $isPublic = 'false';
-        $html = "<h1>Site public supprimé</h1>";
+        $html = "<h1>Public site removed</h1>";
         break;
     default:
         $attributes = ' mv-storage="' . storage($currentPage) . '"';

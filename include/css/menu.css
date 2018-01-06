@@ -93,7 +93,7 @@
 }
 
 #menu-toggle:checked + .menu-icon {
-	left: 180px;
+	left: 198px;
 }
 
 #menu-toggle:checked ~ .content-container {
