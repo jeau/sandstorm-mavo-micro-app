@@ -17,11 +17,11 @@ const pkgdef :Spk.PackageDefinition = (
     # This manifest is included in your app package to tell Sandstorm
     # about your app.
 
-    appTitle = (defaultText = "Mavo App"),
+    appTitle = (defaultText = "Mavo micro-app"),
 
-    appVersion = 0,  # Increment this for every release.
+    appVersion = 0.1,  # Increment this for every release.
 
-    appMarketingVersion = (defaultText = "0.0.2"),
+    appMarketingVersion = (defaultText = "alpha-1"),
     # Human-readable representation of appVersion. Should match the way you
     # identify versions of your app in documentation and marketing.
 
@@ -54,14 +54,14 @@ const pkgdef :Spk.PackageDefinition = (
         #marketBig = (svg = embed "path/to/market-big-300x300.svg"),
       ),
 
-      website = "http://example.com",
+      website = "https://github.com/jeau/sandstorm-mavo-micro-app",
       # This should be the app's main website url.
 
-      codeUrl = "http://example.com",
+      codeUrl = "https://github.com/jeau/sandstorm-mavo-micro-app",
       # URL of the app's source code repository, e.g. a GitHub URL.
       # Required if you specify a license requiring redistributing code, but optional otherwise.
 
-      license = (none = void),
+      license = (openSource = apache2),
       # The license this package is distributed under.  See
       # https://docs.sandstorm.io/en/latest/developing/publishing-apps/#license
 
@@ -114,7 +114,7 @@ const pkgdef :Spk.PackageDefinition = (
       # in an app store. Note that the Markdown is not permitted to contain HTML nor image tags (but
       # you can include a list of screenshots separately).
 
-      shortDescription = (defaultText = "apps \"à la carte\""),
+      shortDescription = (defaultText = "Build apps \"à la carte\""),
       # A very short (one-to-three words) description of what the app does. For example,
       # "Document editor", or "Notetaking", or "Email client". This will be displayed under the app
       # title in the grid view in the app market.
@@ -190,18 +190,19 @@ const pkgdef :Spk.PackageDefinition = (
       (
        title = (defaultText = "administrator"),
        permissions  = .administratorPermissions,
-       verbPhrase = (defaultText = "can make admin"),
-       description = (defaultText = "administrator may view all site data and change settings."),
+       verbPhrase = (defaultText = "can make admin tasks"),
+       description = (defaultText = "administrator may modify all app content and change settings."),
       ),
       (
        title = (defaultText = "editor"),
        permissions  = .editorPermissions,
-       verbPhrase = (defaultText = "can make changes to the document"),
-       description = (defaultText = "editors may view all site data and change settings."),
+       verbPhrase = (defaultText = "can make changes to the app"),
+       description = (defaultText = "editors may update all data."),
       ),
       (
        title = (defaultText = "viewer"),
        permissions  = .viewerPermissions,
+       verbPhrase = (defaultText = "can only view the app"),
       ),
       ],
     ),
