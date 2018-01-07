@@ -183,26 +183,27 @@ const pkgdef :Spk.PackageDefinition = (
            ),
       (name = "read", 
        title = (defaultText = "read"),
-       description = (defaultText = "allows read")),
+       description = (defaultText = "allows read mavo app")),
       ],
 
       roles = [
       (
        title = (defaultText = "administrator"),
        permissions  = .administratorPermissions,
-       verbPhrase = (defaultText = "can make admin tasks"),
+       verbPhrase = (defaultText = "can admin app"),
        description = (defaultText = "administrator may modify all app content and change settings."),
       ),
       (
        title = (defaultText = "editor"),
        permissions  = .editorPermissions,
-       verbPhrase = (defaultText = "can make changes to the app"),
+       verbPhrase = (defaultText = "can update data"),
        description = (defaultText = "editors may update all data."),
       ),
       (
        title = (defaultText = "viewer"),
        permissions  = .viewerPermissions,
-       verbPhrase = (defaultText = "can only view the app"),
+       verbPhrase = (defaultText = "view the contents"),
+       description = (defaultText = "editors can view pages and contents."),
       ),
       ],
     ),
