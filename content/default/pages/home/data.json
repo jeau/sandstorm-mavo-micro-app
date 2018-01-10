@@ -1,28 +1,12 @@
 {
-	"task": [
+	"image": "images/photoConf.jpg",
+	"legend": "Fifth conference participants, 1927. Institut International de Physique Solvay in Leopold Park..",
+	"title": "Solvay Conferences on Physics, from 24 to 29 October 1927",
+	"guest": [
 		{
-			"done": false,
-			"taskTitle": "Do stuff"
-		},
-		{
-			"done": true,
-			"taskTitle": "f sdf sdf "
-		},
-		{
-			"done": true,
-			"taskTitle": "sf df sd"
-		},
-		{
-			"done": false,
-			"taskTitle": "f dfdhj dfhjg fjgh fghjb fhjgbh fjhgb fghj"
-		},
-		{
-			"done": false,
-			"taskTitle": "h fdhj hfhj fjgf"
-		},
-		{
-			"done": false,
-			"taskTitle": "d sdf sdf"
+			"photo": "images/einsteinyoung.jpg",
+			"name": "Albert Einstein",
+			"bio": "German-born theoretical physicist. Einstein developed the theory of relativity, one of the two pillars of modern physics. Einstein's work is also known for its influence on the philosophy of science."
 		}
 	]
 }

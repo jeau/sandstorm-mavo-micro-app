@@ -112,6 +112,7 @@ opt/app/content/default/pages/about
 opt/app/content/default/pages/about/body.html
 opt/app/content/default/pages/about/data.json
 opt/app/content/default/pages/home
+opt/app/content/default/pages/home/.body.html.swp
 opt/app/content/default/pages/home/body.html
 opt/app/content/default/pages/home/data.json
 opt/app/images
@@ -137,6 +138,7 @@ opt/app/repo/pages
 opt/app/repo/pages/about
 opt/app/repo/pages/about/body.html
 opt/app/repo/pages/about/data.json
+opt/app/sandstorm-integration/bin/getPublicId
 proc/cpuinfo
 sandstorm-http-bridge
 sandstorm-http-bridge-config

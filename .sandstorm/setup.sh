@@ -33,7 +33,7 @@ if [ ! -e /usr/local/bin/capnp ] ; then
     cd /tmp
     if [ ! -e capnproto ]; then git clone https://github.com/sandstorm-io/capnproto; fi
     cd capnproto
-    git checkout master
+    git checkout v0.6.1 
     cd c++
     autoreconf -i
     ./configure
