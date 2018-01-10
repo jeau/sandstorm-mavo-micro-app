@@ -29,6 +29,11 @@ Micro-app template
 
 So, this micro-app could be interpreted and edited possibly in other context.
 
+It is quite possible to run the micro-app outside of Sandstorm with the internal php server, this is convenient to build the micro-app skeleton. To do that, from the root directory, launch :
+
+- `php -S localhost:8080`
+- access the micro-app with your browser.
+
 ## Features
 
 For each each Sandstorm grain :
@@ -72,4 +77,5 @@ This application uses the following libraries:
 
 - manage configuration parameters
 - import / export micro-apps 
+- git access to Sanstorm grain
 - replace the php internal web server by a serious one 
