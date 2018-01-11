@@ -42,7 +42,7 @@ if ($userRole == 'admin' ) {
     case "config":
         $attributes = ' mv-plugins="yaml" mv-format="yaml" mv-storage="' . $configStorageFile . '"';
         $html = file_get_contents($configContentFile);
-        $html .= publishingInfos();
+        if ($insideSanstorm) $html .= publishingInfos();
         break;
     case "delete":
         if (isset($_GET['delConfirm'])) {
@@ -81,12 +81,16 @@ if ($userRole == 'admin' ) {
     $html = file_get_contents(content($currentPage));
 }
 
+/* the current page rendering */
+
 echo renderHeader(true);
 echo renderAdminMenuToggle();
 echo "<header>" . renderMenu() . "</header>\n";
 echo '<main mv-app="grain" mv-storage-type="php" ' . $attributes . '>' .  $html . "</main>\n";
 echo renderAdminMenu(); 
 echo renderFooter(); 
+
+/* functions */
 
 function content($page) {
     return 'repo/pages/' . $page . '/body.html';
