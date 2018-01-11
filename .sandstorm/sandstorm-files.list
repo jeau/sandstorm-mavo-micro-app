@@ -101,10 +101,7 @@ opt/app/content/default
 opt/app/content/default/config.html
 opt/app/content/default/config.yaml
 opt/app/content/default/images
-opt/app/content/default/images/Capturedecran2017-11-17a08.54.46.png
-opt/app/content/default/images/cop23-initiativesClimatGP-21nov2017EMF.jpg
 opt/app/content/default/images/einsteinyoung.jpg
-opt/app/content/default/images/mariecurie.jpg
 opt/app/content/default/images/photo.jpg
 opt/app/content/default/images/photoConf.jpg
 opt/app/content/default/pages
@@ -118,6 +115,7 @@ opt/app/content/default/pages/home/data.json
 opt/app/images
 opt/app/include/css/concise-wrapper.min.css
 opt/app/include/css/menu.css
+opt/app/include/css/style.css
 opt/app/include/js/mavo-php.js
 opt/app/include/js/mavo-yaml.js
 opt/app/include/php/spyc.php
@@ -127,18 +125,14 @@ opt/app/repo
 opt/app/repo/config.html
 opt/app/repo/config.yaml
 opt/app/repo/images
-opt/app/repo/images/Capturedecran2017-11-17a08.54.46.png
 opt/app/repo/images/PhotoConf.jpg
-opt/app/repo/images/cop23-initiativesClimatGP-21nov2017EMF.jpg
 opt/app/repo/images/einsteinyoung.jpg
-opt/app/repo/images/mariecurie.jpg
 opt/app/repo/images/photo.jpg
 opt/app/repo/images/photoConf.jpg
 opt/app/repo/pages
 opt/app/repo/pages/about
 opt/app/repo/pages/about/body.html
 opt/app/repo/pages/about/data.json
-opt/app/sandstorm-integration/bin/getPublicId
 proc/cpuinfo
 sandstorm-http-bridge
 sandstorm-http-bridge-config

@@ -39,6 +39,8 @@ if [ ! -e /usr/local/bin/capnp ] ; then
     ./configure
     make -j2
     sudo make install
+    cd ..
+    rm -Rf capnproto
 fi
 
 # Second, compile the small C++ program within
@@ -46,10 +48,12 @@ fi
 if [ ! -e /opt/app/sandstorm-integration/getPublicId ] ; then
     pushd /opt/app/sandstorm-integration
     make
+    make clean
 fi
 ### All done.
 
 ls /opt/app/sandstorm-integration/
+apt-get autoremove
 apt-get clean
 
 exit 0
