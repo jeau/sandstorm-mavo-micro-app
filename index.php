@@ -254,7 +254,7 @@ function pagesList() {
 }
 
 function renderFooter() {
-    $result = '<footer>A <a href="https://mavo.io/" target="_blank">Mavo</a> micro-app</footer>';
+    $result = '<footer container class="_text-right">A <a href="https://mavo.io/" target="_blank">Mavo</a> micro-app</footer>';
     $result .= '</body>';
     $result .= '</html>';
     return $result;
