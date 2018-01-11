@@ -85,12 +85,6 @@ echo renderHeader(true);
 echo renderAdminMenuToggle();
 echo "<header>" . renderMenu() . "</header>\n";
 echo '<main mv-app="grain" mv-storage-type="php" ' . $attributes . '>' .  $html . "</main>\n";
-if (!empty($sandstormHeaders['Connection'])) {
-    echo "<pre>";
-    print_r($sandstormHeaders);
-    print_r($publishingInfo);
-    echo "</pre>";
-}
 echo renderAdminMenu(); 
 echo renderFooter(); 
 
@@ -143,7 +137,7 @@ function renderAdminMenu() {
         $result .= addPageButton();
         if (count(pagesList()) > 0) $result .= delPageButton() ; 
         $result .= '<li><h2>MICRO-APP</h2></li>';
-        $result .= ($isPublic == 'true') ? unPublishPublicSiteButton() : publishPublicSiteButton();
+        if ($insideSanstorm) $result .= ($isPublic == 'true') ? unPublishPublicSiteButton() : publishPublicSiteButton();
         $result .= configAppButton();
         $result .= '</ul></div>';
         return $result;
@@ -256,7 +250,8 @@ function pagesList() {
 }
 
 function renderFooter() {
-    $result = '</body>';
+    $result = '<footer>A <a href="https://mavo.io/" target="_blank">Mavo</a> micro-app</footer>';
+    $result .= '</body>';
     $result .= '</html>';
     return $result;
 }
