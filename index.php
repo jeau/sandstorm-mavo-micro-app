@@ -240,8 +240,8 @@ function publishStaticPage($page) {
     $data = file_get_contents(storage($page));
     $static = renderHeader().
         '<header container>' . renderMenu('static') . '</header>' . "\n".
-        '<main mv-app="static" mv-storage="'. $page . '.json" mv-bar="none" container>' .  $content . "</main>\n".
-        "</body>\n</html>\n";
+        '<main mv-app="static" mv-storage="'. $page . '.json" mv-bar="none" container>' .  $content . "</main>\n";
+    $static .= renderFooter();
     file_put_contents('/var/www/' . $page . '.json', $data, LOCK_EX);
     file_put_contents('/var/www/' . (($page == "home") ? "index" : $page) . '.html', $static, LOCK_EX);
 }
@@ -272,7 +272,8 @@ function pagesList() {
 function renderFooter() {
     global $config;
     $result = '<footer container class="_text-right">' .
-        'A <a href="https://mavo.io/" target="_blank">Mavo</a> micro-app' .
+        'A <a href="https://sandstorm.io/" target="_blank">Sandstorm</a> / ' .
+        '<a href="https://mavo.io/" target="_blank">Mavo</a> micro-app' .
         ' — <a mailto:"' . $config['mail'] . '">' . $config['creator'] . '</a>' . 
         '</footer>';
     $result .= '</body>';

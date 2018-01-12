@@ -14,6 +14,10 @@ mkdir -p /var/mavo
 mkdir -p /var/www
 mkdir -p /var/www/images
 
+if [ ! -d "/var/mavo/content" ]; then
+    rsync -r /opt/app/content/ /var/mavo/content
+fi
+
 if [ ! -L "/var/mavo/index.php" ]; then
     ln -s /opt/app/index.php /var/mavo/index.php
 fi
@@ -34,16 +38,12 @@ if [ ! -L "/var/mavo/include" ]; then
     ln -s /opt/app/include /var/mavo/include
 fi
 
-if [ ! -L "/var/mavo/images" ]; then
-    ln -s /var/mavo/repo/images /var/mavo/images
-fi
-
-if [ ! -d "/var/mavo/content" ]; then
-    rsync -r /opt/app/content/ /var/mavo/content
-fi
-
 if [ ! -L "/var/mavo/repo" ]; then
     ln -s /var/mavo/content/default /var/mavo/repo
+fi
+
+if [ ! -L "/var/mavo/images" ]; then
+    ln -s /var/mavo/repo/images /var/mavo/images
 fi
 
 cd /var/mavo

@@ -102,6 +102,8 @@ opt/app/content/default/config.html
 opt/app/content/default/config.yaml
 opt/app/content/default/images
 opt/app/content/default/images/.DS_Store
+opt/app/content/default/images/Marie_Curie_c1920.jpg
+opt/app/content/default/images/einsteinyoung.jpg
 opt/app/content/default/images/photoConf.jpg
 opt/app/content/default/pages
 opt/app/content/default/pages/about
