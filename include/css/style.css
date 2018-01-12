@@ -1,3 +1,7 @@
+dl {
+    margin-top: 0.5em
+}
+
 [mv-mode="edit"] {
     border: 1px dashed LightGreen;
 }
