@@ -167,7 +167,7 @@ function renderAdminMenu() {
 function renderMenu($static=false) {
     global $currentPage, $config, $do;
     $menu_app = ($config['title']) ? '<h1 class="_m0 _ts3 _ptxs _regular">' . $config['title'] . "</h1>\n" : "";
-    if (count(pagesList()) > 0) {
+    if ((count(pagesList()) > 0) || ($do == 'config'))  {
         $urlPageKey = (!$static) ? '?page=' : "";
         $extensionPage = ($static) ? '.html' : "";
         $menu_app .= '<ul class="breadcrumb-nav">';
