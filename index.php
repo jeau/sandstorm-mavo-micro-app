@@ -166,20 +166,21 @@ function renderAdminMenu() {
 
 function renderMenu($static=false) {
     global $currentPage, $config, $do;
-    $menu_app = ($config['title']) ? '<h1 class="_m0 _ts3 _ptxs _regular">' . $config['title'] . '</h1>' : "";
+    $menu_app = ($config['title']) ? '<h1 class="_m0 _ts3 _ptxs _regular">' . $config['title'] . "</h1>\n" : "";
     if (count(pagesList()) > 0) {
         $urlPageKey = (!$static) ? '?page=' : "";
         $extensionPage = ($static) ? '.html' : "";
         $menu_app .= '<ul class="breadcrumb-nav">';
         $active = ($currentPage == 'home') ? ' -active' : '';
         $menu_app .= '<li class="item' . $active . '">';
-        $menu_app .= '<a href="' . $urlPageKey . 'index' . $extensionPage . '"><i class="fa fa-home"></i></a></li>';
+        $menu_app .= '<a href="' . $urlPageKey . 'index' . $extensionPage . '"><i class="fa fa-home"></i></a>';
+        $menu_app .= "</li>\n";
         foreach (pagesList() as $item) {
             $active = ($currentPage == $item) ? ' -active' : ''; 
             $menu_app .= '<li class="item' . $active . '">'.'
                 <a href="' . $urlPageKey . $item . $extensionPage . '">    ' . $item . '</a></li>';
         }
-        $menu_app .= '</ul>';
+        $menu_app .= "</ul>\n";
     } 
     return $menu_app ;
 }
