@@ -51,7 +51,7 @@ if ($userRole == 'admin' ) {
             rmdir('repo/pages/' . $currentPage);
         }
         $attributes = 'mv-storage="' . storage('index') . '"';
-        $html = file_get_contents(content('index'));
+        $html = file_get_contents(content('home'));
         break;
     case "publish":
         publishStaticImages();
@@ -69,19 +69,22 @@ if ($userRole == 'admin' ) {
         $html = "<h1>Public site removed</h1>";
         break;
     default:
-        $attributes = ' mv-storage="' . storage($currentPage) . '"';
+        $attributes = parameters() . ' mv-storage="' . storage($currentPage) . '"';
         $html = file_get_contents(content($currentPage));
     }
 } else { 
     if ($userRole == "read") {
-        $attributes = ' mv-source="' . storage($currentPage) . '" mv-bar="none" ';
+        $attributes =  ' mv-source="' . storage($currentPage) . '" mv-bar="none" ';
     } else {
-        $attributes = ' mv-storage="' . storage($currentPage) . '"';
+        $attributes = parameters() . ' mv-storage="' . storage($currentPage) . '"';
     }
     $html = file_get_contents(content($currentPage));
 }
 
-/* the current page rendering */
+/* ######################################################################
+ * the current page rendering 
+ * ######################################################################
+*/
 
 echo renderHeader(true);
 echo renderAdminMenuToggle();
@@ -90,7 +93,10 @@ echo '<main mv-app="grain" mv-storage-type="php" ' . $attributes . '>' .  $html 
 echo renderAdminMenu(); 
 echo renderFooter(); 
 
-/* functions */
+/* ######################################################################
+ * functions 
+ * ######################################################################
+*/
 
 function content($page) {
     return 'repo/pages/' . $page . '/body.html';
@@ -100,24 +106,32 @@ function storage($page) {
     return 'repo/pages/' . $page . '/data.json';
 }
 
+function parameters() {
+    global $config;
+    $result = '';
+    if ($config['autosave']) $result .= ' mv-autosave '; 
+    if ($config['autoedit']) $result .= ' class="mv-autoedit" ';
+   return $result; 
+}
+
 function renderHeader($static=false) {
     global $config;
     $result = '<html lang="en">'.
-        '<head>'.
-        '<meta charset="UTF-8">'.
-        '<title>' . $config['title'] . '</title>'.
-        '<script src="https://get.mavo.io/mavo.js"></script>'.
-        '<script src="include/js/mavo-php.js"></script>'.
-        '<script src="include/js/mavo-yaml.js"></script>'.
-        '<link rel="stylesheet" href="https://get.mavo.io/mavo.css">'.
-        '<link rel="stylesheet" href="https://cdn.concisecss.com/concise.min.css">'.
-        '<link rel="stylesheet" href="https://cdn.concisecss.com/concise-utils/concise-utils.min.css">'.
-        '<link rel="stylesheet" href="https://cdn.concisecss.com/concise-ui/concise-ui.min.css">'.
-        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">'.
-        '<link rel="stylesheet" href="include/css/menu.css">'.
-        '<link rel="stylesheet" href="include/css/style.css">'.
-        '</head>'.
-        '<body>';
+        '<head>'."\n".
+        '<meta charset="UTF-8">'."\n".
+        '<title>' . $config['title'] . '</title>'."\n".
+        '<script src="https://get.mavo.io/mavo.js"></script>'."\n".
+        '<script src="include/js/mavo-php.js"></script>'."\n".
+        '<script src="include/js/mavo-yaml.js"></script>'."\n".
+        '<link rel="stylesheet" href="https://get.mavo.io/mavo.css">'."\n".
+        '<link rel="stylesheet" href="https://cdn.concisecss.com/concise.min.css">'."\n".
+        '<link rel="stylesheet" href="https://cdn.concisecss.com/concise-utils/concise-utils.min.css">'."\n".
+        '<link rel="stylesheet" href="https://cdn.concisecss.com/concise-ui/concise-ui.min.css">'."\n".
+        '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">'."\n".
+        '<link rel="stylesheet" href="include/css/menu.css">'."\n".
+        '<link rel="stylesheet" href="include/css/style.css">'."\n".
+        '</head>'."\n".
+        '<body>'."\n";
     return $result;
 }
 
@@ -254,7 +268,11 @@ function pagesList() {
 }
 
 function renderFooter() {
-    $result = '<footer container class="_text-right">A <a href="https://mavo.io/" target="_blank">Mavo</a> micro-app</footer>';
+    global $config;
+    $result = '<footer container class="_text-right">' .
+        'A <a href="https://mavo.io/" target="_blank">Mavo</a> micro-app' .
+        ' — <a mailto:"' . $config['mail'] . '">' . $config['creator'] . '</a>' . 
+        '</footer>';
     $result .= '</body>';
     $result .= '</html>';
     return $result;

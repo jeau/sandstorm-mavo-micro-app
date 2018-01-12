@@ -1,16 +1,32 @@
 <h1>About</h1>
-<h2>
-	<img property="image" src="images/photo.jpg" alt="">
-	<span property="name">Grumpy Cat</span>
-</h2>
 
-<p property="description" class="tinymce">
-	<strong>Tardar Sauce</strong> (born April 4, 2012), commonly known as <strong>Grumpy Cat</strong>, is a cat Internet and media personality and actress.
-	She is known for her permanently "grumpy" facial appearance, which is caused by an <a href="https://en.wikipedia.org/wiki/Malocclusion" title="Malocclusion">underbite</a> and <a href="https://en.wikipedia.org/wiki/Dwarf_cat" title="Dwarf cat">feline dwarfism</a>.
-</p>
+<div property="event" typeof="Event">
+    <div property="startDate" datetime="1927-10-24">24 to 29 October 1927</div>
+    <h2 property="name">Solvay Conference on Physics</h2>
 
-<div class="links">
-	<a property class="twitter" href="https://twitter.com/RealGrumpyCat" target="_blank" title="Twitter">🐦</a>
-	<a property class="facebook" href="https://www.facebook.com/TheOfficialGrumpyCat" target="_blank" title="Facebook">f</a>
-	<a property class="wikipedia" href="https://en.wikipedia.org/wiki/Grumpy_Cat" target="_blank" title="Wikipedia">W</a>
+    <div property="organizer" typeof="Organization">
+        <h3>Organizer: <span property="name">International Solvay Institutes</span></h3>
+
+        <dl property="chairs" typeof="Person">
+            <dt>Chair</dt>
+            <dd mv-multiple property="chair">Name: <span property="name" >Hendrik Lorentz</span></dd>
+        </dl>
+    </div>
+
+    <div property="location" typeof="Place" >
+        <h3>Location: <span property="name">Hôtel Métropole</span></h3>
+        <dl property="address" typeof="PostalAddress">
+            <dt>Address</dt>
+            <dd>Street: <span property="streetAddress">Place De Brouckère 31</span></dd>
+            <dd>Locality: <span property="addressLocality">Brussels, Belgium</span></dd>
+            <dd>Postal Code: <span property="postalCode">B-1000</span>
+        </dl>
+        <dl property="geo" typeof="GeoCoordinates">
+            <dt>Geo Coordinates</dt>
+            <dd>Latitude: <span property="latitude">50.85144</span></dd>
+            <dd>Longitude: <span property="longitude">4.3537</span></dd>
+            <iframe width="400" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://cartosm.eu/map?lon=[longitude]&lat=[latitude]&zoom=6&mark=true&nav=true&pan=true"></iframe>
+        </dl>
+    </div>
 </div>
+
