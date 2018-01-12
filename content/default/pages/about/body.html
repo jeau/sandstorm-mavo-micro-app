@@ -1,15 +1,17 @@
 <h1>About</h1>
 
-<div property="event" typeof="Event">
+<div property="about" typeof="Event">
     <div property="startDate" datetime="1927-10-24">24 to 29 October 1927</div>
     <h2 property="name">Solvay Conference on Physics</h2>
 
     <div property="organizer" typeof="Organization">
         <h3>Organizer: <span property="name">International Solvay Institutes</span></h3>
 
-        <dl property="chairs" typeof="Person">
+        <dl>
             <dt>Chair</dt>
-            <dd mv-multiple property="chair">Name: <span property="name" >Hendrik Lorentz</span></dd>
+            <dd property="organizer" typeof="Person" mv-multiple>
+            <span property="givenName" >Hendrik</span> <span property="familyName" >Lorentz</span>
+            </dd>
         </dl>
     </div>
 
