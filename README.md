@@ -45,6 +45,7 @@ For each each Sandstorm grain :
 ## Issues
 
 - Need to refresh the page after changing settings.
+- The textarea form field is permanently in edit mode.
 
 ## Developing
 
