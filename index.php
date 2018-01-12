@@ -146,7 +146,7 @@ function renderAdminMenuToggle() {
 }
 
 function renderAdminMenu() {
-    global $userRole, $config, $currentPage, $do, $isPublic;
+    global $userRole, $config, $currentPage, $do, $insideSanstorm, $isPublic;
     $result = '</div>';
     if ($userRole == "admin") {
         $result .= '<div class="slideout-sidebar mv-ui"><ul>';
@@ -155,7 +155,9 @@ function renderAdminMenu() {
         $result .= addPageButton();
         if (count(pagesList()) > 0) $result .= delPageButton() ; 
         $result .= '<li><h2>MICRO-APP</h2></li>';
-        if ($insideSanstorm) $result .= ($isPublic == 'true') ? unPublishPublicSiteButton() : publishPublicSiteButton();
+        if ($insideSanstorm && $config['allowPublicSite']) {
+            $result .= ($isPublic == 'true') ? unPublishPublicSiteButton() : publishPublicSiteButton();
+        }
         $result .= configAppButton();
         $result .= '</ul></div>';
         return $result;
