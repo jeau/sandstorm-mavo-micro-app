@@ -89,7 +89,7 @@ if ($userRole == 'admin' ) {
 echo renderHeader(true);
 echo renderAdminMenuToggle();
 echo "<header>" . renderMenu() . "</header>\n";
-echo '<main mv-app="grain" mv-storage-type="php" ' . $attributes . '>' .  $html . "</main>\n";
+echo '<main mv-app="grain" mv-storage-type="php" ' . $attributes . ' typeof="Thing">' .  $html . "</main>\n";
 echo renderAdminMenu(); 
 echo renderFooter(); 
 
@@ -131,7 +131,7 @@ function renderHeader($static=false) {
         '<link rel="stylesheet" href="include/css/menu.css">'."\n".
         '<link rel="stylesheet" href="include/css/style.css">'."\n".
         '</head>'."\n".
-        '<body ' . (!empty($config['vocabulary']) ? 'vocab="'.$config['vocabulary'].'"' : "") . '>'."\n";
+        '<body vocab="http://schema.org">'."\n";
     return $result;
 }
 
@@ -241,7 +241,9 @@ function publishStaticPage($page) {
     $data = file_get_contents(storage($page));
     $static = renderHeader().
         '<header container>' . renderMenu('static') . '</header>' . "\n".
-        '<main mv-app="static" mv-storage="'. $page . '.json" mv-bar="none" container>' .  $content . "</main>\n";
+        '<main mv-app="static" mv-storage="'. $page . '.json" mv-bar="none" typeof="Thing" container>' .  
+        $content . 
+        "</main>\n";
     $static .= renderFooter();
     file_put_contents('/var/www/' . $page . '.json', $data, LOCK_EX);
     file_put_contents('/var/www/' . (($page == "home") ? "index" : $page) . '.html', $static, LOCK_EX);
