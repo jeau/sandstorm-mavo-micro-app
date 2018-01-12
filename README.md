@@ -42,6 +42,10 @@ For each each Sandstorm grain :
 - editor can update data with mavo interface
 - viewer can view pages
 
+## Issues
+
+- Need to refresh the page after changing settings.
+
 ## Developing
 
 Launch a local [Sandstorm](http://sandstorm.io) instance :
