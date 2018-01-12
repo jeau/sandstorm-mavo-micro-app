@@ -131,7 +131,7 @@ function renderHeader($static=false) {
         '<link rel="stylesheet" href="include/css/menu.css">'."\n".
         '<link rel="stylesheet" href="include/css/style.css">'."\n".
         '</head>'."\n".
-        '<body>'."\n";
+        '<body ' . (!empty($config['vocabulary']) ? 'vocab="'.$config['vocabulary'].'"' : "") . '>'."\n";
     return $result;
 }
 

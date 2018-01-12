@@ -1,6 +1,7 @@
 title: Conference
 creator: Nikopol
 mail: Micro-app title
-allowPublicSite: false
+allowPublicSite: true
 autoedit: false
 autosave: false
+vocabulary: 'http://schema.org'
