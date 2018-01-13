@@ -8,5 +8,6 @@
 			"name": "Marie Curie",
 			"bio": "A Polish and naturalized-French physicist and chemist who conducted pioneering research on radioactivity, the first woman to win a Nobel Prize, the first person and only woman to win twice."
 		}
-	]
+	],
+	"@context": "http://schema.org"
 }
