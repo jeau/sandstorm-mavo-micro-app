@@ -80,7 +80,9 @@ This application uses the following libraries:
 
 ## TODO
 
-- manage configuration parameters
+- rewrite this code with php best practices
+- manage templates
+- use syntax highlighting
 - import / export micro-apps 
 - git access to Sanstorm grain
 - replace the php internal web server by a serious one 
