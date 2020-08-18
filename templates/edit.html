@@ -16,7 +16,7 @@
         <form action="/save/{{.Title}}" method="POST">
             <div><textarea id="code" name="body" rows="20" cols="80">{{.Body | safeHTML}}</textarea></div>
             <div><input type="submit" value="Save {{.Title}}">  <input type="reset" value="Reset"></div>
-            <div><a href="/view/index">Cancel</a></div>
+            <div><a href="/view/{{.Title}}">Cancel</a></div>
         </form>
         <script>
             var editor = CodeMirror.fromTextArea(document.getElementById("code"), {

@@ -18,7 +18,7 @@ type Page struct {
 }
 
 func redirectHome(w http.ResponseWriter, r *http.Request) {
-    http.Redirect(w, r, "/view/index", http.StatusFound)
+    http.Redirect(w, r, "/view/HomePage", http.StatusFound)
 }
 
 func (p *Page) save() error {
