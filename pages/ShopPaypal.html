@@ -1,0 +1,78 @@
+<div class="flex two full">
+    <div mv-app="eshop" mv-storage="https://github.com/mavoweb/mavo.io/demos/eshop/products.json" mv-bar="no-login">
+        <h1>Products</h1>
+        <article property="product" mv-multiple class="card">
+            <img property="image" alt="" />
+            <footer>
+                <h3 property="name"></h3>
+                <!-- Dot notation because cart is a separate Mavo app, due to separate storage (local) -->
+                <button mv-action="add(product, cart.product)" class="add-to-cart">Add to cart</button>
+                <span property="amount" class="price"></span>
+            </footer>
+        </article>
+        <footer>
+            Products from <a href="http://theworstthingsforsale.com/">The Worst Things For Sale</a>
+            &bull; <a href="?login" class="mv-login">Admin login</a>
+        </footer>
+
+    </div>
+    <div>
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank"
+                                                                           mv-app="cart" mv-storage="local" mv-autosave="0" mv-mode="read">
+            <h1>My Cart</h1>
+
+            <!-- required by PayPal -->
+            <input type="hidden" name="cmd" value="_cart">
+            <input type="hidden" name="upload" value="1">
+            <input type="hidden" name="business" value="actions@mavo.io"> <!-- Sandbox account -->
+            <input type="hidden" name="currency_code" value="USD">
+
+            <table>
+                <colgroup>
+                    <col class="remove"></col>
+                    <col class="product"></col>
+                    <col class="quantity"></col>
+                    <col class="price"></col>
+                    <col class="subtotal"></col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tr property="product" mv-multiple mv-initial-items="0">
+                    <!-- Anything with a name attribute is sent to PayPal -->
+                    <td><button type="button" title="Remove from cart" mv-action="delete(product)" class="remove warning"">❌</button></td>
+                    <td property="name"></td>
+                    <td><input type="number" property="quantity" value="1" min="1" name="quantity_[$index + 1]"></td>
+                    <td class="price" property="amount"></td>
+                    <td>
+                        <span property="subtotal" class="price">[amount * quantity]</span>
+                        <input type="hidden" name="item_name_[$index + 1]" value="[name]">
+                        <input type="hidden" name="amount_[$index + 1]" value="[amount]">
+                    </td>
+                </tr>
+                <tr mv-if="count(product) = 0" class="empty-cart-message">
+                    <td colspan="4">(Cart is empty)</td>
+                    <td></td>
+                </tr>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">Total</td>
+                        <td class="price">$ [sum(subtotal)]</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <button disabled="[count(product) = 0]" class="checkout">Check out with PayPal (sandbox)</button>
+        </form>
+    </div>
+</div>
+<style>
+    @import url("https://cdn.jsdelivr.net/npm/picnic"); 
+    body {padding: 0 10px;}
+    img {width: 140px; margin-right: 20px; float:left;}
+</style>
