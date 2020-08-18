@@ -8,7 +8,7 @@ import (
 	"regexp"
 )
 
-var urlPathRegex string = "^/(edit|save|view)/(index|wiki|todo|contact|shop)$"
+var urlPathRegex string = "^/(edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
 var store string = "none"
 var publish string = "none"
 
@@ -38,7 +38,7 @@ func loadPage(title string) (*Page, error) {
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 	p, err := loadPage(title)
 	if err != nil {
-        redirectHome(w, r)
+        http.Redirect(w, r, "/edit/"+title, http.StatusFound)
 		return
 	}
 	renderTemplate(w, "view", p)
