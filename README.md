@@ -12,11 +12,7 @@ Sandstorm offers the ability to create new derivative micro-applications and cus
 
 Mavo extends the syntax of HTML to describe Web applications that manage, store, and transform data. 
 
-In the Sandstrorm context
-
-So, this micro-app could be interpreted and edited possibly in other context.
-
-It is quite possible to run the micro-app outside of Sandstorm with the internal php server, this is convenient to build the micro-app skeleton. To do that, from the root directory, launch :
+It is quite possible to run the micro-app outside of Sandstorm with Go, this is convenient to build the micro-app skeleton. To do that, from the root directory, launch :
 
 - `go run microapp.go`
 - access the micro-app with your browser: `http://localhost:8000`
