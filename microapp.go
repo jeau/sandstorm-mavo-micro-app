@@ -32,8 +32,6 @@ func (p *Page) del() error {
 	return os.Remove(filename)
 }
 
-
-
 func loadPage(title string) (*Page, error) {
 	filename := "pages/" + title + ".html"
 	body, err := ioutil.ReadFile(filename)
@@ -65,8 +63,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
     p := &Page{Title: title, Body: []byte(body)}
     if len(body) == 0 && title != "HomePage" {
         err := p.del()
-        if err == nil {
-            http.Error(w, err.Error(), http.StatusInternalServerError)
+        if err != nil {
             return
         }
         http.Redirect(w, r, "/view/HomePage", http.StatusFound)
