@@ -6,46 +6,33 @@ It's a prototype of a [Sandstorm](http://sandstorm.io) application based on Mavo
 
 _"Mavo is a language that lets you create and edit interactive websites and apps with nothing more than HTML. Mavo allows you to make websites editable and saveable to the cloud via Github, DropBox or other services"_ … and Sandstorm, why not!
 
-Sandstorm provides the ability to customize existing micro-applications, create new ones, store files and publish static pages.
+Sandstorm offers the ability to create new derivative micro-applications and customize existing.
 
 ## Micro-app package specifications 
 
-Mavo extends the syntax of HTML to describe Web applications that manage, store, and transform data. Inside this Sandstorm package, a micro-application has a simple and codeless structure. 
+Mavo extends the syntax of HTML to describe Web applications that manage, store, and transform data. 
 
-Micro-app template 
-
-- `name` — root directory micro-app name
-    - `config.html` — config file, the config data are editable with [Mavo](http://mavo.io) to update the micro-app settings
-    - `config.yaml` — config data from `config.html`  
-    - `images` — directory for multimedia uploads from the pages  
-    - `pages` — directory for pages (one sub-directory per page) 
-        - `home` — home page of the micro-application, can't be deleted 
-            - `body.html` — content of the page    
-            - `data.json` — mavo data of the page
-        - `page` — a second page with the same sub-structure
-            - `body.html` — content of the page    
-            - `data.json` — mavo data of the page
-        - ...
+In the Sandstrorm context
 
 So, this micro-app could be interpreted and edited possibly in other context.
 
 It is quite possible to run the micro-app outside of Sandstorm with the internal php server, this is convenient to build the micro-app skeleton. To do that, from the root directory, launch :
 
-- `php -S localhost:8080`
-- access the micro-app with your browser.
+- `go run microapp.go`
+- access the micro-app with your browser: `http://localhost:8000`
 
-## Features
+## Features 
 
-For each each Sandstorm grain :
+For each each Sandstorm grain (in progress) :
 
 - admin grain can edit, create and delete pages ; publish and unpublish static pages
 - editor can update data with mavo interface
 - viewer can view pages
 
-## Issues
+## Issues 
 
-- Need to refresh the page after changing settings.
-- The textarea form field is permanently in edit mode.
+
+
 
 ## Developing
 
@@ -74,15 +61,17 @@ You can upload this spk file inside your own Sandtorm server to test it.
 
 This application uses the following libraries:
 
-- [mavo](http://mavo.io/) — an HTML-based language for creating web applications without programming. 
-- [spyc](https://github.com/mustangostang/spyc) — a simple YAML loader/dumper class for PHP.
-- [Concise CSS](http://concisecss.com/) — a lightweight CSS framework.
+- [Mavo](http://mavo.io/) — an HTML-based language for creating web applications without programming. 
+- [Goland](https://golang.org/) — Go pieces of code by the Go Authors and community .
 
 ## TODO
 
-- rewrite this code with php best practices
-- manage templates
-- use syntax highlighting
-- import / export micro-apps 
-- git access to Sanstorm grain
-- replace the php internal web server by a serious one 
+- learning Go ;)
+- Go storage backend for Mavo data 
+- Documentation 
+- Implement Sandstorm roles for each each grain (may be limited by Mavo)  :
+  - **Admins** can edit code pages ; publish and unpublish static pages
+  - **User** can update data with mavo interface
+  - **Visitor** can view pages
+
+

@@ -1,0 +1,18 @@
+{{define "view"}}<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{.Title}}</title>
+        <script src="https://get.mavo.io/stable/mavo.min.js"></script>
+        <link rel="stylesheet" href="https://get.mavo.io/stable/mavo.min.css">
+        <style>{{template "style"}}</style>
+    </head>
+    <body>
+        <div class="microappnavbar"><a href="/">Home</a> | <a href="/edit/{{.Title}}">Edit code of <i>{{.Title}}</i></a></div> 
+        <main>
+            {{.Body | safeHTML}}
+        </main>
+    </body>
+</html>
+{{end}}
