@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"io/ioutil"
+    "os"
 	"log"
 	"net/http"
 	"regexp"
@@ -25,6 +26,13 @@ func (p *Page) save() error {
 	filename := "pages/" + p.Title + ".html"
 	return ioutil.WriteFile(filename, p.Body, 0600)
 }
+
+func (p *Page) del() error {
+	filename := "pages/" + p.Title + ".html"
+	return os.Remove(filename)
+}
+
+
 
 func loadPage(title string) (*Page, error) {
 	filename := "pages/" + title + ".html"
@@ -53,14 +61,23 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
-	body := r.FormValue("body")
-	p := &Page{Title: title, Body: []byte(body)}
-	err := p.save()
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	http.Redirect(w, r, "/view/"+title, http.StatusFound)
+    body := r.FormValue("body")
+    p := &Page{Title: title, Body: []byte(body)}
+    if len(body) == 0 && title != "HomePage" {
+        err := p.del()
+        if err == nil {
+            http.Error(w, err.Error(), http.StatusInternalServerError)
+            return
+        }
+        http.Redirect(w, r, "/view/HomePage", http.StatusFound)
+    } else {
+        err := p.save()
+        if err != nil {
+            http.Error(w, err.Error(), http.StatusInternalServerError)
+            return
+        }
+        http.Redirect(w, r, "/view/"+title, http.StatusFound)
+    }
 }
 
 var templates = template.Must(template.New("").Funcs(template.FuncMap{
@@ -70,30 +87,30 @@ var templates = template.Must(template.New("").Funcs(template.FuncMap{
 }).ParseGlob("templates/*"))
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	err := templates.ExecuteTemplate(w, tmpl, p)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
+    err := templates.ExecuteTemplate(w, tmpl, p)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+    }
 }
 
 var validPath = regexp.MustCompile(urlPathRegex)
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		m := validPath.FindStringSubmatch(r.URL.Path)
-		if m == nil {
-			http.NotFound(w, r)
-			return
-		}
-		fn(w, r, m[2])
-	}
+    return func(w http.ResponseWriter, r *http.Request) {
+        m := validPath.FindStringSubmatch(r.URL.Path)
+        if m == nil {
+            http.NotFound(w, r)
+            return
+        }
+        fn(w, r, m[2])
+    }
 }
 
 func main() {
-	http.HandleFunc("/", redirectHome)
-	http.HandleFunc("/view/", makeHandler(viewHandler))
-	http.HandleFunc("/edit/", makeHandler(editHandler))
-	http.HandleFunc("/save/", makeHandler(saveHandler))
+    http.HandleFunc("/", redirectHome)
+    http.HandleFunc("/view/", makeHandler(viewHandler))
+    http.HandleFunc("/edit/", makeHandler(editHandler))
+    http.HandleFunc("/save/", makeHandler(saveHandler))
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
