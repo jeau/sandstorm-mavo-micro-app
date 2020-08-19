@@ -1,11 +1,12 @@
-<div mv-app="homepage" mv-storage="local" mv-plugins="tinymce" mv-bar="no-login">
-
-    <div id="wiki" property="description" class="tinymce"></div>
-
+<div mv-app="homepage" mv-storage="local" mv-plugins="tinymce" mv-bar="no-login" id="wiki">
+  
+    <h1 property="title">Title</h1>  
+    <div property="content" class="tinymce">Content here</div>
+  
 </div>
 
 <style>
-#wiki {width: 100%; height: 80%; }
+  #wiki {width: 80%; margin: 30px 10%;}
 </style>
 
 <script src="https://plugins.mavo.io/tinymce/mavo-tinymce.js"></script>
