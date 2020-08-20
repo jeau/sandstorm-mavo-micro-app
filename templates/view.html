@@ -9,7 +9,9 @@
         <style>{{template "style"}}</style>
     </head>
     <body>
-        <div class="microappnavbar"><a href="/">Home</a> | <a href="/edit/{{.Title}}">Edit code of <i>{{.Title}}</i></a></div> 
+        {{if .Access.IsLogged }}
+        <div class="microappnavbar">{{.Access.Name}} <a href="/edit/{{.Title}}">Edit</a></div>
+        {{end}}
         <main>
             {{.Body | safeHTML}}
         </main>

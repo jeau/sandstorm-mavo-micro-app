@@ -14,6 +14,7 @@ var urlPathRegex string = "^/(edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
 type Page struct {
 	Title string
 	Body  []byte
+    Access User
 }
 
 // User Sandstorm informations
@@ -29,7 +30,7 @@ func userInfos( r *http.Request) (*User, error) {
     nickname := r.Header.Get("X-Sandstorm-Preferred-Handle")
     username := r.Header.Get("X-Sandstorm-Username")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
-    login := ( nickname == "admin,edit,read" )
+    login := ( permissions == "admin,edit,read" )
     return &User{Nickname: nickname, Name: username, Permissions: permissions, IsLogged: login}, nil
  }
 
@@ -70,6 +71,8 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
         http.Redirect(w, r, "/edit/"+title, http.StatusFound)
 		return
 	}
+    u, _ := userInfos(r)
+    p.Access = *u
 	renderTemplate(w, "view", p)
 }
 
