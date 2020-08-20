@@ -29,7 +29,8 @@ func userInfos( r *http.Request) (*User, error) {
     nickname := r.Header.Get("X-Sandstorm-Preferred-Handle")
     username := r.Header.Get("X-Sandstorm-Username")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
-    return &User{Nickname: nickname, Name: username, Permissions: permissions, IsLogged: true}, nil
+    login := ( nickname == "admin,edit,read" )
+    return &User{Nickname: nickname, Name: username, Permissions: permissions, IsLogged: login}, nil
  }
 
 // Pages functions
