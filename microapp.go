@@ -10,17 +10,15 @@ import (
 )
 
 var urlPathRegex string = "^/(edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
-var store string = "none"
-var publish string = "none"
 
 type Page struct {
 	Title string
 	Body  []byte
 }
 
-func redirectHome(w http.ResponseWriter, r *http.Request) {
-    http.Redirect(w, r, "/view/HomePage", http.StatusFound)
-}
+// User Sandstorm informations
+
+// Pages functions
 
 func (p *Page) save() error {
 	folder := "pages/" + p.Title
@@ -48,6 +46,8 @@ func loadPage(title string) (*Page, error) {
 	}
 	return &Page{Title: title, Body: body}, nil
 }
+
+// Http handler
 
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 	p, err := loadPage(title)
@@ -85,6 +85,8 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
     }
 }
 
+// Pages render
+
 var templates = template.Must(template.New("").Funcs(template.FuncMap{
     "safeHTML": func(b []byte) template.HTML {
         return template.HTML(b)
@@ -98,7 +100,13 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
     }
 }
 
+// Web server 
+
 var validPath = regexp.MustCompile(urlPathRegex)
+
+func redirectHome(w http.ResponseWriter, r *http.Request) {
+    http.Redirect(w, r, "/view/HomePage", http.StatusFound)
+}
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
