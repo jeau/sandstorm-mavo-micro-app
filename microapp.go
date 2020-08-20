@@ -18,6 +18,20 @@ type Page struct {
 
 // User Sandstorm informations
 
+type User struct {
+     Nickname string `json:"nickname"`
+     Name string `json:"name"`
+     Permissions string `json:"permissions"`
+     IsLogged bool `json:"isLogged"`
+}
+
+func userInfos( r *http.Request) (*User, error) {
+    nickname := r.Header.Get("X-Sandstorm-Preferred-Handle")
+    username := r.Header.Get("X-Sandstorm-Username")
+    permissions := r.Header.Get("X-Sandstorm-Permissions")
+    return &User{Nickname: nickname, Name: username, Permissions: permissions, IsLogged: true}, nil
+ }
+
 // Pages functions
 
 func (p *Page) save() error {
