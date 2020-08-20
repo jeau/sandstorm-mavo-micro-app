@@ -23,17 +23,25 @@ func redirectHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p *Page) save() error {
-	filename := "pages/" + p.Title + ".html"
+	folder := "pages/" + p.Title
+	filename := folder + "/index.html"
+    _, err := os.Stat(folder)
+    if os.IsNotExist(err) {
+		errDir := os.MkdirAll(folder, 0755)
+		if errDir != nil {
+			log.Fatal(errDir)
+		}
+    }
 	return ioutil.WriteFile(filename, p.Body, 0600)
 }
 
 func (p *Page) del() error {
-	filename := "pages/" + p.Title + ".html"
-	return os.Remove(filename)
+	filename := "pages/" + p.Title
+	return os.RemoveAll(filename)
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := "pages/" + title + ".html"
+	filename := "pages/" + title + "/index.html"
 	body, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
