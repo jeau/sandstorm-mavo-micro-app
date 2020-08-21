@@ -10,15 +10,18 @@
     </head>
     <body>
         {{if .Access.IsLogged }}
-        <div class="microappnavbar"><a href="/edit/{{.Title}}">Edit <i>{{.Title}}</i></a>
-            Pages : {{range $i,$a := .PagesList}} 
-            <a href="{{$a}}">{{$a}}</a>&nbsp;|&nbsp;
+        <div class="microappnavbar">
+            <ul class="ma-edit">
+                <li><a href="/edit/{{.Title}}">Edit <i>{{.Title}}</i></a></li>
+            </ul>
+            <ul class="ma-pageslist">
+            {{range $i,$a := .PagesList}} 
+            <li {{if eq $a "HomePage"}} class="ma-homepage"{{end}}><a href="{{$a}}">{{$a}}</a></li>
             {{end}}
+            </ul>
         </div>
         {{end}}
-        <main>
-            {{.Body | safeHTML}}
-        </main>
+        {{.Body | safeHTML}}
     </body>
 </html>
 {{end}}

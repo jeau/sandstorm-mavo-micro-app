@@ -11,13 +11,17 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/addon/edit/matchbrackets.min.js" integrity="sha512-zgTUY40c9HFb3Kr25lTW3gpnSt+xVc0yWPYwa6Yu7kChiaOHfNlyA4bM8Y3YLzjeQfrNFy40UcbOE/Cmmb29nQ==" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/theme/ayu-dark.min.css" integrity="sha512-3/qeNGuMFHa3JQVnHybYEdUbc0ktOoIqqkNiF+UpjroQ0StzmwFvMtEWL6Bt+9SUF6xgYYeW29x3SXC07MwvDw==" crossorigin="anonymous" />
         <title>{{.Title}}</title>
+        <style>{{template "style"}}</style>
     </head>
     <body>
         <main>
             <form action="/save/{{.Title}}" method="POST">
                 <div><textarea id="code" name="body" rows="20" cols="80">{{.Body | safeHTML}}</textarea></div>
-                <div><input type="submit" value="Save {{.Title}}">  <input type="reset" value="Reset"></div>
-                <div><a href="/view/{{.Title}}">Cancel</a></div>
+                <div class="microappbuttons">
+                    <input type="submit" value="Save {{.Title}}">
+                    <input type="reset" value="Reset">
+                    <a href="/view/{{.Title}}">Cancel</a>
+                </div>
             </form>
         </main>
         <script>
