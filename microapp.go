@@ -28,10 +28,11 @@ type User struct {
 }
 
 func userInfos( r *http.Request) (*User, error) {
+    tab := r.Header.Get("X-Sandstorm-Tab-Id")
     nickname := r.Header.Get("X-Sandstorm-Preferred-Handle")
     username := r.Header.Get("X-Sandstorm-Username")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
-    login := ( permissions == "admin,edit,read" )
+    login := ( permissions == "admin,edit,read" || tab == "")
     return &User{Nickname: nickname, Name: username, Permissions: permissions, IsLogged: login}, nil
  }
 
