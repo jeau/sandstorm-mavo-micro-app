@@ -1,0 +1,54 @@
+{{define "admin"}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+div {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 4px 12px 0 8px ;
+    text-align: left;
+    background-color: #333;
+    color: white;
+    font-family: monospace;
+    font-size: 1.2em;
+}
+
+a {
+    color: #f2f2f2;
+    text-decoration: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    display: inline;
+    margin: 0 16px 4px 0;
+}
+
+.edit, .first { float: left;}
+
+.list { float: right;}
+
+        </style>
+    </head>
+    <body>
+        <div>
+            <ul class="edit">
+                <li><a href="/edit/{{.Title}}" target="_parent" rel="noopener noreferrer">Edit <i>{{.Title}}</i></a></li>
+            </ul>
+            <ul class="list">
+                {{range $i,$a := .PagesList }} 
+                <li {{if eq $a "HomePage"}}class="first"{{end}}><a href="/view/{{$a}}" target="_parent" rel="noopener noreferrer">{{$a}}</a></li>
+                {{end}}
+            </ul>
+        </div>
+    </body>
+</html>
+{{end}}
