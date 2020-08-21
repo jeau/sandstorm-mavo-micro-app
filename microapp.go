@@ -15,6 +15,7 @@ type Page struct {
 	Title string
 	Body  []byte
     Access User
+    PagesList []string
 }
 
 // User Sandstorm informations
@@ -63,6 +64,17 @@ func loadPage(title string) (*Page, error) {
 	return &Page{Title: title, Body: body}, nil
 }
 
+func listPages() ([]string) {
+    file, err := os.Open("pages")
+    if err != nil {
+        log.Fatalf("failed opening directory: %s", err)
+    }
+    defer file.Close()
+    list,_ := file.Readdirnames(0)
+    return list
+}
+
+
 // Http handler
 
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -73,6 +85,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 	}
     u, _ := userInfos(r)
     p.Access = *u
+    p.PagesList = listPages()
 	renderTemplate(w, "view", p)
 }
 

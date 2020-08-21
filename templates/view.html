@@ -10,7 +10,11 @@
     </head>
     <body>
         {{if .Access.IsLogged }}
-        <div class="microappnavbar">{{.Access.Name}} <a href="/edit/{{.Title}}">Edit</a></div>
+        <div class="microappnavbar"><a href="/edit/{{.Title}}">Edit <i>{{.Title}}</i></a>
+            Pages : {{range $i,$a := .PagesList}} 
+            <a href="{{$a}}">{{$a}}</a>&nbsp;|&nbsp;
+            {{end}}
+        </div>
         {{end}}
         <main>
             {{.Body | safeHTML}}
