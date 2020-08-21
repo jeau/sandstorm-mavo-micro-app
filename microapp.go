@@ -9,7 +9,7 @@ import (
 	"regexp"
 )
 
-var urlPathRegex string = "^/(edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
+var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
 
 type Page struct {
 	Title string
@@ -93,7 +93,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 	p, err := loadPage(title)
 	if err != nil {
-		p = &Page{Title: title}
+        p = &Page{Title: title }
 	}
 	renderTemplate(w, "edit", p)
 }
@@ -115,6 +115,15 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
         }
         http.Redirect(w, r, "/view/"+title, http.StatusFound)
     }
+}
+
+func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
+	p, err := loadPage(title)
+	if err != nil {
+        log.Fatalf("failed loading page: %s", err)
+	}
+    p.PagesList = listPages()
+	renderTemplate(w, "admin", p)
 }
 
 // Pages render
@@ -156,6 +165,7 @@ func main() {
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
+    http.HandleFunc("/admin/", makeHandler(adminHandler))
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }

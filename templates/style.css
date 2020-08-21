@@ -1,38 +1,10 @@
 {{define "style"}}
-div.microappnavbar {
-  position: fixed;
-  top: 0;
-  width: 100%; 
-  padding: 4px;
-  text-align: left;
-  background-color: #333;
-  color: white;
-  font-family: monospace;
-  font-size: 14px;
-}
-
-div.microappnavbar a {
-  color: #f2f2f2;
-  padding: 0 12px;
-  text-decoration: none;
-}
-
-div.microappnavbar ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-div.microappnavbar ul.ma-edit, div.microappnavbar li.ma-homepage {
-    float: left;
-}
-
-div.microappnavbar ul.ma-pageslist {
-    float: right;
-}
-
-div.microappnavbar li {
-  display: inline;
+#microappAdminBar {
+    position: fixed;
+    top: 0;
+    left:0;
+    width: 100%;
+    border: none;
 }
 
 div.microappbuttons input, div.microappbuttons a {
@@ -48,5 +20,4 @@ div.microappbuttons input, div.microappbuttons a {
     display: inline-block;
     cursor: pointer;
 }
-
 {{end}}

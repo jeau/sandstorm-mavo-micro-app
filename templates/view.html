@@ -10,16 +10,7 @@
     </head>
     <body>
         {{if .Access.IsLogged }}
-        <div class="microappnavbar">
-            <ul class="ma-edit">
-                <li><a href="/edit/{{.Title}}">Edit <i>{{.Title}}</i></a></li>
-            </ul>
-            <ul class="ma-pageslist">
-            {{range $i,$a := .PagesList}} 
-            <li {{if eq $a "HomePage"}} class="ma-homepage"{{end}}><a href="{{$a}}">{{$a}}</a></li>
-            {{end}}
-            </ul>
-        </div>
+        <iframe src="/admin/{{.Title}}" id="microappAdminBar"></iframe>
         {{end}}
         {{.Body | safeHTML}}
     </body>

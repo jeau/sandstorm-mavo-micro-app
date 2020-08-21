@@ -74,6 +74,7 @@ opt/app/pages/ToDoList/index.html
 opt/app/pages/WikiWay
 opt/app/pages/WikiWay/index.html
 opt/app/templates
+opt/app/templates/admin.html
 opt/app/templates/edit.html
 opt/app/templates/style.css
 opt/app/templates/view.html
