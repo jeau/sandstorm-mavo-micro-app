@@ -40,6 +40,13 @@ func userInfos( r *http.Request) (*User, error) {
     return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: login}, nil
  }
 
+ // Mavo backend for Sandstorm
+
+ type Response struct {
+    Status bool `json:"status"`
+    Data User `json:"data"`
+}
+
 // Pages functions
 
 func (p *Page) save() error {
@@ -130,6 +137,15 @@ func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
 	renderTemplate(w, "admin", p)
 }
 
+//Mavo backend Handler returns http response in JSON format
+
+func backendHandler(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "application/json")
+    login := User { Login: "test", PasswordHint: "The password is test", Name: "Amazing tester",IsLogged: true}
+    response := Response {Status: true, Data: login}
+    json.NewEncoder(w).Encode(response)
+}
+
 // Pages render
 
 var templates = template.Must(template.New("").Funcs(template.FuncMap{
@@ -170,6 +186,7 @@ func main() {
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
     http.HandleFunc("/admin/", makeHandler(adminHandler))
+    http.HandleFunc("/backend/", backendHandler)
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 }
