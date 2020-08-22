@@ -27,8 +27,7 @@ For each each Sandstorm grain (in progress) :
 
 ## Issues 
 
-
-
+- the Sandstorm backend storage of mavo data is not yet implemented
 
 ## Developing
 
