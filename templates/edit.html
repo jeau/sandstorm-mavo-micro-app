@@ -16,7 +16,7 @@
     <body>
         <main>
             <form action="/save/{{.Title}}" method="POST">
-                <div><textarea id="code" name="body" rows="20" cols="80">{{.Body | safeHTML}}</textarea></div>
+                <div><textarea id="code" name="body" rows="40" cols="80">{{.Body | safeHTML}}</textarea></div>
                 <div class="microappbuttons">
                     <input type="submit" value="Save {{.Title}}">
                     <input type="reset" value="Reset">
