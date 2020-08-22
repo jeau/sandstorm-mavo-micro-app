@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"regexp"
+    "encoding/json"
 )
 
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
@@ -23,17 +24,20 @@ type Page struct {
 type User struct {
      Nickname string `json:"nickname"`
      Name string `json:"name"`
+     Picture string `json:"avatar"`
      Permissions string `json:"permissions"`
      IsLogged bool `json:"isLogged"`
+     Login string `json:"login"`
 }
 
 func userInfos( r *http.Request) (*User, error) {
     tab := r.Header.Get("X-Sandstorm-Tab-Id")
     nickname := r.Header.Get("X-Sandstorm-Preferred-Handle")
     username := r.Header.Get("X-Sandstorm-Username")
+    picture := r.Header.Get("X-Sandstorm-User-Picture")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
     login := ( permissions == "admin,edit,read" || tab == "")
-    return &User{Nickname: nickname, Name: username, Permissions: permissions, IsLogged: login}, nil
+    return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: login}, nil
  }
 
 // Pages functions
