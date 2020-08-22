@@ -48,7 +48,10 @@ Launch a local [Sandstorm](http://sandstorm.io) instance :
 To create a Sandstorm package (SPK) file, containing the app and all its dependencies. 
 
 - Stop the `vagrant-spk dev` server : type `Ctrl-C`.
+- Add your public key in `.sandstorm/sandstorm-pkgdef.capnp`. You can generated it with 'vagrant-spk keygen' command.   
 - To create the SPK file, run: `vagrant-spk pack ~/export-path/package.spk`
+
+
 
 You can upload this spk file inside your own Sandtorm server to test it.
 
