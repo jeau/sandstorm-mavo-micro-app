@@ -66,6 +66,8 @@ This application uses the following libraries:
 - [Mavo](http://mavo.io/) — an HTML-based language for creating web applications without programming. 
 - [Goland](https://golang.org/) — Go pieces of code by the Go Authors and community .
 
+The backend is inspired by the [Falafel65 PHP adaptor for Mavo](https://github.com/Falafel65/mavo-php).
+
 ## TODO
 
 - learning Go ;)
