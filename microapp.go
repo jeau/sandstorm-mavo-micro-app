@@ -37,7 +37,6 @@ func userInfos( r *http.Request) (*User, error) {
     username, _ := url.QueryUnescape(r.Header.Get("X-Sandstorm-Username"))
     picture := r.Header.Get("X-Sandstorm-User-Picture")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
-   // login := ( permissions == "admin,edit,read" || permissions == "admin" || permissions == "edit" || tab == "")
     isAuthorised, _ := regexp.MatchString("admin|edit", permissions)
     isLogged := (isAuthorised || tab == "")
     return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged}, nil
@@ -88,7 +87,6 @@ func listPages() ([]string) {
     list,_ := file.Readdirnames(0)
     return list
 }
-
 
 // Http handler
 
