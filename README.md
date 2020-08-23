@@ -17,6 +17,10 @@ It is quite possible to run the micro-app outside of Sandstorm with Go, this is 
 - `go run microapp.go`
 - access the micro-app with your browser: `http://localhost:8000`
 
+## Installation
+
+On you Sandstorm server upload the last [spk](https://github.com/jeau/sandstorm-mavo-micro-app/releases) package like new app and launch some grains with. 
+
 ## Features 
 
 For each each Sandstorm grain (in progress) :
