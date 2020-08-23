@@ -36,8 +36,10 @@ func userInfos( r *http.Request) (*User, error) {
     username := r.Header.Get("X-Sandstorm-Username")
     picture := r.Header.Get("X-Sandstorm-User-Picture")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
-    login := ( permissions == "admin,edit,read" || tab == "")
-    return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: login}, nil
+   // login := ( permissions == "admin,edit,read" || permissions == "admin" || permissions == "edit" || tab == "")
+    isAuthorised, _ := regexp.MatchString("admin|edit", permissions)
+    isLogged := (isAuthorised || tab == "")
+    return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged}, nil
  }
 
  // Mavo backend for Sandstorm
@@ -141,8 +143,11 @@ func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func backendHandler(w http.ResponseWriter, r *http.Request) {
     w.Header().Set("Content-Type", "application/json")
-    login := User { Login: "test", PasswordHint: "The password is test", Name: "Amazing tester",IsLogged: true}
-    response := Response {Status: true, Data: login}
+    login, err := userInfos(r)
+    if (err != nil) {
+        log.Fatalf("failed loading user infos: %s", err)
+    }
+    response := Response {Status: true, Data: *login}
     json.NewEncoder(w).Encode(response)
 }
 
