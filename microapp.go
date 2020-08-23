@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"regexp"
     "encoding/json"
+    "net/url"
 )
 
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
@@ -33,7 +34,7 @@ type User struct {
 func userInfos( r *http.Request) (*User, error) {
     tab := r.Header.Get("X-Sandstorm-Tab-Id")
     nickname := r.Header.Get("X-Sandstorm-Preferred-Handle")
-    username := r.Header.Get("X-Sandstorm-Username")
+    username, _ := url.QueryUnescape(r.Header.Get("X-Sandstorm-Username"))
     picture := r.Header.Get("X-Sandstorm-User-Picture")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
    // login := ( permissions == "admin,edit,read" || permissions == "admin" || permissions == "edit" || tab == "")
