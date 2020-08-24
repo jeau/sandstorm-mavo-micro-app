@@ -89,12 +89,16 @@ func listPages() ([]string) {
 // Http handler
 
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
+    u, _ := userInfos(r)
 	p, err := loadPage(title)
 	if err != nil {
+        if u.IsLogged {
         http.Redirect(w, r, "/edit/"+title, http.StatusFound)
+     } else {
+        http.Redirect(w, r, "/"+r.URL.Path, http.StatusFound)
+     }
 		return
 	}
-    u, _ := userInfos(r)
     p.Access = *u
     p.PagesList = listPages()
 	renderTemplate(w, "view", p)
