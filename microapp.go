@@ -138,25 +138,29 @@ func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 //Mavo backend Handler returns http response in JSON format
 
-func resultAction(a string, r *http.Request) Response {
-    var response = Response {Status: true, Data: User {}}
+func resultAction(r *http.Request) Response {
+    infos, err := userInfos(r)
+    if (err != nil) {
+        log.Fatalf("failed loading user infos: %s", err)
+    }
+    a := r.URL.Query().Get("action")
+    var response = Response {Status: false, Data: User {}}
     switch a {
     case "login":
-        login, err := userInfos(r)
-        if (err != nil) {
-            log.Fatalf("failed loading user infos: %s", err)
-        }
-        response := Response {Status: true, Data: *login}
+        response := Response {Status: true, Data: *infos}
         return response
     case "logout":
+        return response
+    case "putData":
+        return response
+    case "putFile":
         return response
     }
     return response
 }
 
 func backendHandler(w http.ResponseWriter, r *http.Request) {
-    a := r.URL.Query().Get("action")
-    response := resultAction(a, r)
+    response := resultAction(r)
     j, _ := json.Marshal(response)
     w.Write(j)
 }
