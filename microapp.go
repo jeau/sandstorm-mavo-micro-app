@@ -20,7 +20,12 @@ type Page struct {
     PagesList []string
 }
 
-// User Sandstorm informations
+// Mavo backend for Sandstorm
+
+ type Response struct {
+    Status bool `json:"status"`
+    Data User `json:"data"`
+}
 
 type User struct {
      Nickname string `json:"nickname"`
@@ -41,13 +46,6 @@ func userInfos( r *http.Request) (*User, error) {
     isLogged := (isAuthorised || tab == "")
     return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged}, nil
  }
-
- // Mavo backend for Sandstorm
-
- type Response struct {
-    Status bool `json:"status"`
-    Data User `json:"data"`
-}
 
 // Pages functions
 
@@ -140,14 +138,27 @@ func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 //Mavo backend Handler returns http response in JSON format
 
-func backendHandler(w http.ResponseWriter, r *http.Request) {
-    w.Header().Set("Content-Type", "application/json")
-    login, err := userInfos(r)
-    if (err != nil) {
-        log.Fatalf("failed loading user infos: %s", err)
+func resultAction(a string, r *http.Request) Response {
+    var response = Response {Status: true, Data: User {}}
+    switch a {
+    case "login":
+        login, err := userInfos(r)
+        if (err != nil) {
+            log.Fatalf("failed loading user infos: %s", err)
+        }
+        response := Response {Status: true, Data: *login}
+        return response
+    case "logout":
+        return response
     }
-    response := Response {Status: true, Data: *login}
-    json.NewEncoder(w).Encode(response)
+    return response
+}
+
+func backendHandler(w http.ResponseWriter, r *http.Request) {
+    a := r.URL.Query().Get("action")
+    response := resultAction(a, r)
+    j, _ := json.Marshal(response)
+    w.Write(j)
 }
 
 // Pages render
@@ -185,12 +196,12 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 }
 
 func main() {
-    http.HandleFunc("/", redirectHome)
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
     http.HandleFunc("/admin/", makeHandler(adminHandler))
-    http.HandleFunc("/backend/", backendHandler)
+    http.HandleFunc("/backend", backendHandler)
+    http.HandleFunc("/", redirectHome)
 
-	log.Fatal(http.ListenAndServe(":8000", nil))
+    log.Fatal(http.ListenAndServe(":8000", nil))
 }
