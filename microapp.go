@@ -156,6 +156,16 @@ func resultAction(r *http.Request) Response {
     case "logout":
         return response
     case "putData":
+        source := r.URL.Query().Get("source")
+        reqBody, err := ioutil.ReadAll(r.Body)
+        if err != nil {
+            log.Fatal(err)
+        }
+        errwf := ioutil.WriteFile(source, reqBody, 0600)
+        if errwf != nil {
+            log.Fatal(errwf)
+        }
+        response := Response {Status: true, Data: *infos}
         return response
     case "putFile":
         return response
