@@ -1,12 +1,13 @@
 {{define "storage"}}
-    Mavo.Backend.register(Bliss.Class({
+Mavo.Backend.register(Bliss.Class({
 	extends: Mavo.Backend,
 	id: "sandstorm",
 	constructor: function() {
-        this.permissions.on("login","read");
+		this.permissions.on(["login", "read"]);
 		this.key = this.mavo.id;
-		this.aFile = new URL('/backend', Mavo.base);
-        this.user = false;
+		this.appFile = new URL('/backend', Mavo.base);
+		
+		this.user = false;
 		this.login(true);
 	},
 	
@@ -15,8 +16,8 @@
 	// path: Path to store data
 	// o: Arbitrary options
 	put: function(serialized, path = this.path, o = {}) {
-		// new URL() to clone File url
-		var postUrl = new URL(this.aFile);
+		// new URL() to clone appFile url
+		var postUrl = new URL(this.appFile);
 		// Send appID
 		postUrl.searchParams.set('id', this.key);
 		// Send filename
@@ -32,7 +33,7 @@
 			.then((data) => {
 				if (typeof (data.status) !== 'undefined') {
 					if (data.status === false) {
-						this.mavo.error('Mavo-sandstorm : save error', data.data);	
+						this.mavo.error('Mavo-Sandstorm : save error', data.data);	
 					}
 				}
 				return data;
@@ -62,8 +63,8 @@
 		if (passive) {
 		    return Promise.resolve(this.user);
 		} else {
-			// new URL() to clone File url
-			let loginUrl = new URL(this.aFile);
+			// new URL() to clone appFile url
+			let loginUrl = new URL(this.appFile);
 			// Action is login
 			loginUrl.searchParams.set('action', 'login');
 			// Login from what ?
@@ -92,12 +93,12 @@
 
 	// Log current user out
 	logout: function() {
-		let loginUrl = new URL(this.aFile);
+		let loginUrl = new URL(this.appFile);
 		// Say we logout
 		loginUrl.searchParams.set('action', 'logout');
 		// Logout from what ?
 		loginUrl.searchParams.set('id', this.key);
-		// Return if Sandstorm unset $_SESSION['user']
+		// Return if no user connected from sandstorm 
 		return this.request(loginUrl)
 			.then((userData) => {
 				this.user = false;
