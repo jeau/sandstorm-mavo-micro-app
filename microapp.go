@@ -165,6 +165,12 @@ func resultAction(r *http.Request) Response {
             source := r.URL.Query().Get("source")
             body, err := ioutil.ReadAll(r.Body)
             check(err)
+            _, errs := os.Stat(source)
+            if os.IsNotExist(errs) {
+                f,err := os.Create(source)
+                check(err)
+                defer f.Close()
+            }
             err = ioutil.WriteFile(source, body, 0600)
             check(err)
             status = true
