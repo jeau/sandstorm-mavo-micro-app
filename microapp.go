@@ -20,14 +20,6 @@ type Page struct {
     PagesList []string
 }
 
-func check(e error) {
-    if e != nil {
-        panic(e)
-    }
-}
-
-// Mavo backend for Sandstorm
-
 type Response struct {
     Status bool `json:"status"`
     Data User `json:"data"`
@@ -53,6 +45,13 @@ func userInfos( r *http.Request) (*User, error) {
     return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged}, nil
 }
 
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
+}
+
+
 // Pages functions
 
 func (p *Page) save() error {
@@ -73,10 +72,12 @@ func (p *Page) del() error {
 
 func loadPage(title string) (*Page, error) {
     filename := "pages/" + title + "/index.html"
+    _,err := os.Stat(filename)
+    if os.IsNotExist(err) {
+        return &Page{Title: title}, err 
+    } 
     body, err := ioutil.ReadFile(filename)
-    if err != nil {
-        return nil, err
-    }
+    check(err)
     return &Page{Title: title, Body: body}, nil
 }
 
@@ -114,21 +115,22 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
     renderTemplate(w, "edit", p)
 }
 
+func createHandler(w http.ResponseWriter, r *http.Request) {
+    newpage := r.URL.Query().Get("newpage")
+    log.Println(newpage)
+    http.Redirect(w, r, "/view/"+newpage, http.StatusFound)
+}
+
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
     body := r.FormValue("body")
     p := &Page{Title: title, Body: []byte(body)}
     if len(body) == 0 && title != "HomePage" {
         err := p.del()
-        if err != nil {
-            return
-        }
+        check(err)
         http.Redirect(w, r, "/view/HomePage", http.StatusFound)
     } else {
         err := p.save()
-        if err != nil {
-            http.Error(w, err.Error(), http.StatusInternalServerError)
-            return
-        }
+        check(err)
         http.Redirect(w, r, "/view/"+title, http.StatusFound)
     }
 }
@@ -142,34 +144,40 @@ func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 //Mavo backend Handler returns http response in JSON format
 
-func resultAction(r *http.Request) Response {
-    u, err := userInfos(r)
-    check(err)
-    a := r.URL.Query().Get("action")
-    if (u.IsLogged == true) {
-        switch a {
-        case "login":
-        case "logout":
-        case "putData":
-            source := r.URL.Query().Get("source")
-            reqBody, err := ioutil.ReadAll(r.Body)
-            check(err)
-            errw := ioutil.WriteFile(source, reqBody, 0600)
-            check(errw)
-        case "putFile":
-        }
-    } else {
-        switch a {
-        case "login":
-        }
-    }
-    return Response {Status: true, Data: *u}
-}
-
 func backendHandler(w http.ResponseWriter, r *http.Request) {
     response := resultAction(r)
     j, _ := json.Marshal(response)
     w.Write(j)
+}
+
+func resultAction(r *http.Request) Response {
+    u, err := userInfos(r)
+    check(err)
+    var status bool = false
+    a := r.URL.Query().Get("action")
+    if (u.IsLogged == true) {
+        switch a {
+        case "login":
+            status = true
+        case "logout":
+            status = true
+        case "putData":
+            source := r.URL.Query().Get("source")
+            body, err := ioutil.ReadAll(r.Body)
+            check(err)
+            err = ioutil.WriteFile(source, body, 0600)
+            check(err)
+            status = true
+        case "putFile":
+            status = true
+        }
+    } else {
+        switch a {
+        case "login":
+            status = true
+        }
+    }
+    return Response {Status: status, Data: *u}
 }
 
 // Pages render
@@ -182,9 +190,7 @@ var templates = template.Must(template.New("").Funcs(template.FuncMap{
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
     err := templates.ExecuteTemplate(w, tmpl, p)
-    if err != nil {
-        http.Error(w, err.Error(), http.StatusInternalServerError)
-    }
+    check(err)
 }
 
 // Web server 
@@ -215,6 +221,7 @@ func main() {
     http.HandleFunc("/edit/", makeHandler(editHandler))
     http.HandleFunc("/save/", makeHandler(saveHandler))
     http.HandleFunc("/admin/", makeHandler(adminHandler))
+    http.HandleFunc("/create/", createHandler)
     http.HandleFunc("/backend", backendHandler)
     http.HandleFunc("/", redirectHome)
 
