@@ -20,6 +20,12 @@ type Page struct {
     PagesList []string
 }
 
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
+}
+
 // Mavo backend for Sandstorm
 
 type Response struct {
@@ -54,10 +60,8 @@ func (p *Page) save() error {
     filename := folder + "/index.html"
     _, err := os.Stat(folder)
     if os.IsNotExist(err) {
-        errDir := os.MkdirAll(folder, 0755)
-        if errDir != nil {
-            log.Fatal(errDir)
-        }
+        err := os.MkdirAll(folder, 0755)
+        check(err)
     }
     return ioutil.WriteFile(filename, p.Body, 0600)
 }
@@ -78,9 +82,7 @@ func loadPage(title string) (*Page, error) {
 
 func listPages() ([]string) {
     file, err := os.Open("pages")
-    if err != nil {
-        log.Fatalf("failed opening directory: %s", err)
-    }
+    check(err)
     defer file.Close()
     list,_ := file.Readdirnames(0)
     return list
@@ -133,9 +135,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
-    if err != nil {
-        log.Fatalf("failed loading page: %s", err)
-    }
+    check(err)
     p.PagesList = listPages()
     renderTemplate(w, "admin", p)
 }
@@ -144,9 +144,7 @@ func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func resultAction(r *http.Request) Response {
     u, err := userInfos(r)
-    if (err != nil) {
-        log.Fatalf("failed loading user infos: %s", err)
-    }
+    check(err)
     a := r.URL.Query().Get("action")
     if (u.IsLogged == true) {
         switch a {
@@ -155,13 +153,9 @@ func resultAction(r *http.Request) Response {
         case "putData":
             source := r.URL.Query().Get("source")
             reqBody, err := ioutil.ReadAll(r.Body)
-            if err != nil {
-                log.Fatal(err)
-            }
-            errwf := ioutil.WriteFile(source, reqBody, 0600)
-            if errwf != nil {
-                log.Fatal(errwf)
-            }
+            check(err)
+            errw := ioutil.WriteFile(source, reqBody, 0600)
+            check(errw)
         case "putFile":
         }
     } else {
