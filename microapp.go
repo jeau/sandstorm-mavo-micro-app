@@ -1,12 +1,12 @@
 package main
 
 import (
-	"html/template"
-	"io/ioutil"
+    "html/template"
+    "io/ioutil"
     "os"
-	"log"
-	"net/http"
-	"regexp"
+    "log"
+    "net/http"
+    "regexp"
     "encoding/json"
     "net/url"
 )
@@ -14,26 +14,26 @@ import (
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
 
 type Page struct {
-	Title string
-	Body  []byte
+    Title string
+    Body  []byte
     Access User
     PagesList []string
 }
 
 // Mavo backend for Sandstorm
 
- type Response struct {
+type Response struct {
     Status bool `json:"status"`
     Data User `json:"data"`
 }
 
 type User struct {
-     Nickname string `json:"nickname"`
-     Name string `json:"name"`
-     Picture string `json:"avatar"`
-     Permissions string `json:"permissions"`
-     IsLogged bool `json:"isLogged"`
-     Login string `json:"login"`
+    Nickname string `json:"nickname"`
+    Name string `json:"name"`
+    Picture string `json:"avatar"`
+    Permissions string `json:"permissions"`
+    IsLogged bool `json:"isLogged"`
+    Login string `json:"login"`
 }
 
 func userInfos( r *http.Request) (*User, error) {
@@ -45,35 +45,35 @@ func userInfos( r *http.Request) (*User, error) {
     isAuthorised, _ := regexp.MatchString("admin|edit", permissions)
     isLogged := (isAuthorised || tab == "")
     return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged}, nil
- }
+}
 
 // Pages functions
 
 func (p *Page) save() error {
-	folder := "pages/" + p.Title
-	filename := folder + "/index.html"
+    folder := "pages/" + p.Title
+    filename := folder + "/index.html"
     _, err := os.Stat(folder)
     if os.IsNotExist(err) {
-		errDir := os.MkdirAll(folder, 0755)
-		if errDir != nil {
-			log.Fatal(errDir)
-		}
+        errDir := os.MkdirAll(folder, 0755)
+        if errDir != nil {
+            log.Fatal(errDir)
+        }
     }
-	return ioutil.WriteFile(filename, p.Body, 0600)
+    return ioutil.WriteFile(filename, p.Body, 0600)
 }
 
 func (p *Page) del() error {
-	filename := "pages/" + p.Title
-	return os.RemoveAll(filename)
+    filename := "pages/" + p.Title
+    return os.RemoveAll(filename)
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := "pages/" + title + "/index.html"
-	body, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, err
-	}
-	return &Page{Title: title, Body: body}, nil
+    filename := "pages/" + title + "/index.html"
+    body, err := ioutil.ReadFile(filename)
+    if err != nil {
+        return nil, err
+    }
+    return &Page{Title: title, Body: body}, nil
 }
 
 func listPages() ([]string) {
@@ -90,26 +90,26 @@ func listPages() ([]string) {
 
 func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
     u, _ := userInfos(r)
-	p, err := loadPage(title)
-	if err != nil {
+    p, err := loadPage(title)
+    if err != nil {
         if u.IsLogged {
-        http.Redirect(w, r, "/edit/"+title, http.StatusFound)
-     } else {
-        http.Redirect(w, r, "/"+r.URL.Path, http.StatusFound)
-     }
-		return
-	}
+            http.Redirect(w, r, "/edit/"+title, http.StatusFound)
+        } else {
+            http.Redirect(w, r, "/"+r.URL.Path, http.StatusFound)
+        }
+        return
+    }
     p.Access = *u
     p.PagesList = listPages()
-	renderTemplate(w, "view", p)
+    renderTemplate(w, "view", p)
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
-	p, err := loadPage(title)
-	if err != nil {
+    p, err := loadPage(title)
+    if err != nil {
         p = &Page{Title: title }
-	}
-	renderTemplate(w, "edit", p)
+    }
+    renderTemplate(w, "edit", p)
 }
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
@@ -132,45 +132,44 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
-	p, err := loadPage(title)
-	if err != nil {
+    p, err := loadPage(title)
+    if err != nil {
         log.Fatalf("failed loading page: %s", err)
-	}
+    }
     p.PagesList = listPages()
-	renderTemplate(w, "admin", p)
+    renderTemplate(w, "admin", p)
 }
 
 //Mavo backend Handler returns http response in JSON format
 
 func resultAction(r *http.Request) Response {
-    infos, err := userInfos(r)
+    u, err := userInfos(r)
     if (err != nil) {
         log.Fatalf("failed loading user infos: %s", err)
     }
     a := r.URL.Query().Get("action")
-    var response = Response {Status: false, Data: User {}}
-    switch a {
-    case "login":
-        response := Response {Status: true, Data: *infos}
-        return response
-    case "logout":
-        return response
-    case "putData":
-        source := r.URL.Query().Get("source")
-        reqBody, err := ioutil.ReadAll(r.Body)
-        if err != nil {
-            log.Fatal(err)
+    if (u.IsLogged == true) {
+        switch a {
+        case "login":
+        case "logout":
+        case "putData":
+            source := r.URL.Query().Get("source")
+            reqBody, err := ioutil.ReadAll(r.Body)
+            if err != nil {
+                log.Fatal(err)
+            }
+            errwf := ioutil.WriteFile(source, reqBody, 0600)
+            if errwf != nil {
+                log.Fatal(errwf)
+            }
+        case "putFile":
         }
-        errwf := ioutil.WriteFile(source, reqBody, 0600)
-        if errwf != nil {
-            log.Fatal(errwf)
+    } else {
+        switch a {
+        case "login":
         }
-        response := Response {Status: true, Data: *infos}
-        return response
-    case "putFile":
-        return response
     }
-    return response
+    return Response {Status: true, Data: *u}
 }
 
 func backendHandler(w http.ResponseWriter, r *http.Request) {
