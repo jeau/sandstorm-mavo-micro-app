@@ -12,7 +12,7 @@
         </article>
         <footer>
             Products from <a href="http://theworstthingsforsale.com/">The Worst Things For Sale</a>
-            &bull; <a href="?login" class="mv-login">Admin login</a>
+            • <a href="?login" class="mv-login">Admin login</a>
         </footer>
 
     </div>
@@ -46,7 +46,7 @@
                 </thead>
                 <tr property="product" mv-multiple mv-initial-items="0">
                     <!-- Anything with a name attribute is sent to PayPal -->
-                    <td><button type="button" title="Remove from cart" mv-action="delete(product)" class="remove warning"">❌</button></td>
+                    <td><button type="button" title="Remove from cart" mv-action="delete(product)" class="remove warning">❌</button></td>
                     <td property="name"></td>
                     <td><input type="number" property="quantity" value="1" min="1" name="quantity_[$index + 1]"></td>
                     <td class="price" property="amount"></td>

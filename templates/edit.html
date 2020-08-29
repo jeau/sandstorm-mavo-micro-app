@@ -16,19 +16,23 @@
     <body>
         <main>
             <form action="/save/{{.Title}}" method="POST">
-                <div><textarea id="code" name="body" rows="40" cols="80">{{.Body | safeHTML}}</textarea></div>
                 <div class="microappbuttons">
                     <input type="submit" value="Save {{.Title}}">
                     <input type="reset" value="Reset">
                     <a href="/view/{{.Title}}">Cancel</a>
+                </div>
+                <div class="microappeditzone">
+                    <textarea id="code" name="body" rows="40" cols="80">{{.Body | safeHTML}}</textarea>
                 </div>
             </form>
         </main>
         <script>
             var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
                 lineNumbers: true,
+                lineWrapping: true,
                 mode: "text/html",
-                matchBrackets: true
+                matchBrackets: true,
+                viewportMargin: Infinity
             });
         </script>
     </body>
