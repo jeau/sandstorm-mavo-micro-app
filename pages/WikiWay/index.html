@@ -1,12 +1,11 @@
-<div mv-app="homepage" mv-storage="local" mv-plugins="tinymce" mv-bar="no-login" id="wiki">
-  
-    <h1 property="title">Title</h1>  
-    <div property="content" class="tinymce">Content here</div>
+<div mv-app="portfolio" mv-storage-type="sandstorm" mv-storage="datas/portfolio.json" mv-upload-url=".">
+
+ <ul> 
+      <li property="painting" typeof="Painting" mv-multiple mv-attribute="none">
+          <img property="image"/>
+        <br />
+        <span property="name" mv-default="[readable(to(filename(image), '.'))]"></span>
+            </li>
+  </ul>
   
 </div>
-
-<style>
-  #wiki {width: 80%; margin: 30px 10%;}
-</style>
-
-<script src="https://plugins.mavo.io/tinymce/mavo-tinymce.js"></script>

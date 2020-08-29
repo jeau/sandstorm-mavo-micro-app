@@ -9,6 +9,7 @@ import (
     "regexp"
     "encoding/json"
     "net/url"
+    "encoding/base64"
 )
 
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
@@ -74,8 +75,8 @@ func loadPage(title string) (*Page, error) {
     filename := "pages/" + title + "/index.html"
     _,err := os.Stat(filename)
     if os.IsNotExist(err) {
-        return &Page{Title: title}, err 
-    } 
+        return &Page{Title: title}, err
+    }
     body, err := ioutil.ReadFile(filename)
     check(err)
     return &Page{Title: title, Body: body}, nil
@@ -175,6 +176,19 @@ func resultAction(r *http.Request) Response {
             check(err)
             status = true
         case "putFile":
+            path := r.URL.Query().Get("path")
+            body, err := ioutil.ReadAll(r.Body)
+            check(err)
+            dec, err := base64.StdEncoding.DecodeString(string(body))
+            check(err)
+            _, errs := os.Stat(path)
+            if os.IsNotExist(errs) {
+                f,err := os.Create(path)
+                check(err)
+                defer f.Close()
+            }
+            err = ioutil.WriteFile(path, dec, 0600)
+            check(err)
             status = true
         }
     } else {
@@ -222,6 +236,7 @@ func main() {
     resources := []string{"assets", "audios", "datas", "images", "videos"}
     for _, value := range resources {
         http.Handle("/view/"+value+"/", http.StripPrefix("/view/"+value+"/", http.FileServer(http.Dir(value+"/"))))
+        http.Handle("/"+value+"/", http.StripPrefix("/"+value+"/", http.FileServer(http.Dir(value+"/"))))
     }
     http.HandleFunc("/view/", makeHandler(viewHandler))
     http.HandleFunc("/edit/", makeHandler(editHandler))
