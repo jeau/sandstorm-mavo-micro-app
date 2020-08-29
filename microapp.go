@@ -13,6 +13,8 @@ import (
 )
 
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
+var dataFileRegex string = "^data/[0-9a-zA-Z-._]+.(json|csv|tsv|txt)$"
+var mediaFileRegex string = "^/(audio|image|video)s/([0-9a-zA-Z-._]+.(aac|aif|aiff|asf|avi|bmp|gif|ico|jp2|jpe|jpeg|jpg|m4a|m4v|mov|mp2|mp3|mp4|mpa|mpe|mpeg|mpg|png|tif|tiff|wav|webm|wma|wmv))$"
 
 type Page struct {
     Title string
@@ -118,7 +120,6 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
     newpage := r.URL.Query().Get("newpage")
-    log.Println(newpage)
     http.Redirect(w, r, "/view/"+newpage, http.StatusFound)
 }
 
@@ -164,32 +165,42 @@ func resultAction(r *http.Request) Response {
             status = true
         case "putData":
             source := r.URL.Query().Get("source")
-            body, err := ioutil.ReadAll(r.Body)
-            check(err)
-            _, errs := os.Stat(source)
-            if os.IsNotExist(errs) {
-                f,err := os.Create(source)
+            validData, _ := regexp.Compile(dataFileRegex)
+            if validData.MatchString(source) {
+                body, err := ioutil.ReadAll(r.Body)
                 check(err)
-                defer f.Close()
+                _, errs := os.Stat(source)
+                if os.IsNotExist(errs) {
+                    f,err := os.Create(source)
+                    check(err)
+                    defer f.Close()
+                }
+                err = ioutil.WriteFile(source, body, 0600)
+                check(err)
+                status = true
+            } else {
+                status = false
             }
-            err = ioutil.WriteFile(source, body, 0600)
-            check(err)
-            status = true
         case "putFile":
             path := r.URL.Query().Get("path")
-            body, err := ioutil.ReadAll(r.Body)
-            check(err)
-            dec, err := base64.StdEncoding.DecodeString(string(body))
-            check(err)
-            _, errs := os.Stat(path)
-            if os.IsNotExist(errs) {
-                f,err := os.Create(path)
+            validMedia, _ := regexp.Compile(mediaFileRegex)
+            if validMedia.MatchString(path) {
+                body, err := ioutil.ReadAll(r.Body)
                 check(err)
-                defer f.Close()
+                dec, err := base64.StdEncoding.DecodeString(string(body))
+                check(err)
+                _, errs := os.Stat(path)
+                if os.IsNotExist(errs) {
+                    f,err := os.Create(path)
+                    check(err)
+                    defer f.Close()
+                }
+                err = ioutil.WriteFile(path, dec, 0600)
+                check(err)
+                status = true
+            } else {
+                status = false
             }
-            err = ioutil.WriteFile(path, dec, 0600)
-            check(err)
-            status = true
         }
     } else {
         switch a {
