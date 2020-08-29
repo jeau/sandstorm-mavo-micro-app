@@ -23,7 +23,7 @@ a {
 
 ul {
     list-style-type: none;
-    margin: 0;
+    margin: 0 12px 0 0;
     padding: 0;
 }
 
@@ -55,15 +55,15 @@ form, input {
         <div>
             <ul class="edit">
                 <li><a href="/edit/{{.Title}}" target="_parent" rel="noopener noreferrer">Edit <i>{{.Title}}</i></a></li>
+                <li class="form"><form action="/create/"  target="_parent" rel="noopener noreferrer">
+                        <input type="text" id="create" name="newpage" value="NewPageName">
+                    </form>
+                </li> 
             </ul>
             <ul class="list">
                 {{range $i,$a := .PagesList }} 
                 <li {{if eq $a "HomePage"}}class="first"{{end}}><a href="/view/{{$a}}" target="_parent" rel="noopener noreferrer">{{$a}}</a></li>
                 {{end}}
-                <li class="form"><form action="/create/"  target="_parent" rel="noopener noreferrer">
-                        <input type="text" id="create" name="newpage" value="NewPageName">
-                    </form>
-                </li> 
             </ul>
         </div>
     </body>
