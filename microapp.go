@@ -233,7 +233,7 @@ func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.Handl
 }
 
 func main() {
-    resources := []string{"assets", "audios", "datas", "images", "videos"}
+    resources := []string{"assets", "audios", "data", "images", "videos"}
     for _, value := range resources {
         http.Handle("/view/"+value+"/", http.StripPrefix("/view/"+value+"/", http.FileServer(http.Dir(value+"/"))))
         http.Handle("/"+value+"/", http.StripPrefix("/"+value+"/", http.FileServer(http.Dir(value+"/"))))
