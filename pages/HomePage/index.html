@@ -1,7 +1,7 @@
-<b>Sandstorm + Mavo:</b> a new way to create, host and share web applications. Read <a href="DocEn">english</a> or <a href="DocFr">french</a> short documentation.
+<main>
+  <b>Sandstorm + Mavo:</b> a new way to create, host and share web applications. Read <a href="DocEn">english</a> or <a href="DocFr">french</a> short documentation.
 
-
-<blockquote mv-app="todo" mv-storage-type="sandstorm" mv-mode="edit" mv-storage="data/todo.json">
+  <blockquote mv-app="todo" mv-storage-type="sandstorm" mv-mode="edit" mv-storage="data/todo.json">
 	<header>
 		<h1>My tasks</h1>
 		<p>[count(done)] done out of [count(task)] total</p>
@@ -18,11 +18,16 @@
 			Clear Completed
 		</button>
 	</ul>
-</blockquote>
+  </blockquote>
 
 <style>
-  @import url("https://unpkg.com/sakura.css/css/sakura.css");
-  body {
-    max-width: 46em;
+  @import url("assets/css/picnic.min.css");
+  main {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  blockquote {
+    margin: 20px 0;
   }
 </style>
+</main>

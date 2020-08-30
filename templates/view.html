@@ -4,10 +4,14 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{.Title}}</title>
-        <script src="https://get.mavo.io/stable/mavo.min.js"></script>
-        <link rel="stylesheet" href="https://get.mavo.io/stable/mavo.min.css">
-        <style>{{template "style"}}</style>
-        <script>{{template "storage"}}</script>
+        <script src="/assets/js/mavo/mavo.min.js"></script>
+        <script src="/assets/js/mavo/dragula.min.js"></script>
+        <script src="/assets/js/mavo/showdown.min.js"></script>
+        <script src="/assets/js/mavo/purify.min.js"></script>
+        <script src="/assets/js/mavo/mavo-markdown.js"></script>
+        <script src="/assets/js/storage.js"></script>
+        <link rel="stylesheet" href="/assets/css/mavo/mavo.min.css">
+        <link rel="stylesheet" href="/assets/css/style.css">
     </head>
     <body>
         {{if .Access.IsLogged }}
