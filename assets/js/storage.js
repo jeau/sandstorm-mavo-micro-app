@@ -1,4 +1,3 @@
-{{define "storage"}}
 Mavo.Backend.register(Bliss.Class({
 	extends: Mavo.Backend,
 	id: "sandstorm",
@@ -115,4 +114,3 @@ Mavo.Backend.register(Bliss.Class({
 		test: value => value == "sandstorm"
 	}
 }));
-{{end}}
