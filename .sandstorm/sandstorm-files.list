@@ -9,6 +9,7 @@ bin/ln
 bin/mkdir
 bin/rm
 bin/sh
+bin/touch
 etc/ld.so.cache
 etc/localtime
 etc/mime.types
@@ -94,6 +95,7 @@ sandstorm-http-bridge
 sandstorm-http-bridge-config
 sandstorm-manifest
 usr/bin/rsync
+usr/bin/touch
 usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache
 usr/lib/x86_64-linux-gnu/libcrypto.so.1.1
 usr/lib/x86_64-linux-gnu/libdb-5.3.so
