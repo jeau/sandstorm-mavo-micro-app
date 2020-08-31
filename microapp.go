@@ -160,8 +160,10 @@ func resultAction(r *http.Request) Response {
     if (u.IsLogged == true) {
         switch a {
         case "login":
+            u.IsLogged = true
             status = true
         case "logout":
+            u.IsLogged = false
             status = true
         case "putData":
             source := r.URL.Query().Get("source")
