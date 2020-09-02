@@ -35,6 +35,7 @@ type User struct {
     Permissions string `json:"permissions"`
     IsLogged bool `json:"isLogged"`
     Login string `json:"login"`
+    IsAdmin bool `json:"isAdmin"`
 }
 
 func userInfos( r *http.Request) (*User, error) {
@@ -43,9 +44,10 @@ func userInfos( r *http.Request) (*User, error) {
     username, _ := url.QueryUnescape(r.Header.Get("X-Sandstorm-Username"))
     picture := r.Header.Get("X-Sandstorm-User-Picture")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
+    isAdmin, _ := regexp.MatchString("admin", permissions)
     isAuthorised, _ := regexp.MatchString("admin|edit", permissions)
     isLogged := (isAuthorised || tab == "")
-    return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged}, nil
+    return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged, IsAdmin: isAdmin}, nil
 }
 
 func check(e error) {
@@ -141,7 +143,10 @@ func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
     check(err)
     p.PagesList = listPages()
-    renderTemplate(w, "admin", p)
+    user := p.Access 
+    if user.IsAdmin {
+        renderTemplate(w, "admin", p)
+    }
 }
 
 //Mavo backend Handler returns http response in JSON format

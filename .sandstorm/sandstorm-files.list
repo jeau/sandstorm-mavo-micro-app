@@ -73,6 +73,7 @@ opt/app/assets/js/codemirror/css.min.js
 opt/app/assets/js/codemirror/htmlembedded.min.js
 opt/app/assets/js/codemirror/matchbrackets.min.js
 opt/app/assets/js/codemirror/xml.min.js
+opt/app/assets/js/format-md.js
 opt/app/assets/js/mavo/dragula.min.js
 opt/app/assets/js/mavo/mavo-markdown.js
 opt/app/assets/js/mavo/mavo.min.js
