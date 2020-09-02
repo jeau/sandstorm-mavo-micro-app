@@ -5,6 +5,7 @@ import (
     "io/ioutil"
     "os"
     "log"
+    "errors"
     "net/http"
     "regexp"
     "encoding/json"
@@ -44,9 +45,10 @@ func userInfos( r *http.Request) (*User, error) {
     username, _ := url.QueryUnescape(r.Header.Get("X-Sandstorm-Username"))
     picture := r.Header.Get("X-Sandstorm-User-Picture")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
-    isAdmin, _ := regexp.MatchString("admin", permissions)
-    isAuthorised, _ := regexp.MatchString("admin|edit", permissions)
-    isLogged := (isAuthorised || tab == "")
+    isAuthorisedAdmin, _ := regexp.MatchString("admin", permissions)
+    isAdmin := (isAuthorisedAdmin || tab == "")
+    isAuthorisedUser, _ := regexp.MatchString("admin|edit", permissions)
+    isLogged := (isAuthorisedUser || tab == "")
     return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged, IsAdmin: isAdmin}, nil
 }
 
@@ -113,11 +115,17 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
 }
 
 func editHandler(w http.ResponseWriter, r *http.Request, title string) {
-    p, err := loadPage(title)
-    if err != nil {
-        p = &Page{Title: title }
+    u, err := userInfos(r)
+    check(err)
+    if u.IsAdmin {
+        p, err := loadPage(title)
+        if err != nil {
+            p = &Page{Title: title }
+        }
+        renderTemplate(w, "edit", p)
+    } else {
+        log.Fatal(errors.New("This user can't edit page"))
     }
-    renderTemplate(w, "edit", p)
 }
 
 func createHandler(w http.ResponseWriter, r *http.Request) {
@@ -128,14 +136,20 @@ func createHandler(w http.ResponseWriter, r *http.Request) {
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
     body := r.FormValue("body")
     p := &Page{Title: title, Body: []byte(body)}
-    if len(body) == 0 && title != "HomePage" {
-        err := p.del()
-        check(err)
-        http.Redirect(w, r, "/view/HomePage", http.StatusFound)
+    u, err := userInfos(r)
+    check(err)
+    if u.IsAdmin {
+        if len(body) == 0 && title != "HomePage" {
+            err := p.del()
+            check(err)
+            http.Redirect(w, r, "/view/HomePage", http.StatusFound)
+        } else {
+            err := p.save()
+            check(err)
+            http.Redirect(w, r, "/view/"+title, http.StatusFound)
+        }
     } else {
-        err := p.save()
-        check(err)
-        http.Redirect(w, r, "/view/"+title, http.StatusFound)
+        log.Fatal(errors.New("This user can't create, alterate or delete page"))
     }
 }
 
@@ -143,8 +157,9 @@ func adminHandler(w http.ResponseWriter, r *http.Request, title string) {
     p, err := loadPage(title)
     check(err)
     p.PagesList = listPages()
-    user := p.Access 
-    if user.IsAdmin {
+    u, err := userInfos(r)
+    check(err)
+    if u.IsAdmin {
         renderTemplate(w, "admin", p)
     }
 }
