@@ -13,7 +13,7 @@ import (
 )
 
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
-var dataFileRegex string = "^data/[0-9a-zA-Z-._]+.(json|csv|tsv|txt)$"
+var dataFileRegex string = "^data/[0-9a-zA-Z-._]+.(json|csv|tsv|txt|md)$"
 var mediaFileRegex string = "^(audios|images|videos)/[0-9a-zA-Z-._]+.(aac|aif|aiff|asf|avi|bmp|gif|ico|jp2|jpe|jpeg|jpg|m4a|m4v|mov|mp2|mp3|mp4|mpa|mpe|mpeg|mpg|png|tif|tiff|wav|webm|wma|wmv)$"
 
 type Page struct {
