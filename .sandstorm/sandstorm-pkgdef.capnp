@@ -19,9 +19,9 @@ const pkgdef :Spk.PackageDefinition = (
 
     appTitle = (defaultText = "Mavo micro-app"),
 
-    appVersion = 8,  # Increment this for every release.
+    appVersion = 9,  # Increment this for every release.
 
-    appMarketingVersion = (defaultText = "alpha-8"),
+    appMarketingVersion = (defaultText = "alpha-9"),
     # Human-readable representation of appVersion. Should match the way you
     # identify versions of your app in documentation and marketing.
 
