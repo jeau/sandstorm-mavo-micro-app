@@ -15,15 +15,17 @@
         <link rel="stylesheet" href="/assets/css/style.css">
     </head>
     <body>
-        {{if .Access.IsLogged }}
+        {{if .Access.IsAdmin }}
         <div id="microapp-menu" style="margin: 0;">
             <iframe src="/admin/{{.Title}}" id="microappAdminBar"></iframe>
         </div>
-        {{end}}
         <div id="microapp-panel" class="islogged-{{.Access.IsLogged}} isadmin-{{.Access.IsAdmin}}" style="margin: 0;">
             <div class="microapp-toggle-button">⚙</div>
+        {{end}}
             {{.Body | safeHTML}}
+        {{if .Access.IsAdmin }}
             </div>
+        {{end}}
         <script src="/assets/js/slideout.min.js"></script>
         <script>
             var slideout = new Slideout({
