@@ -26,7 +26,16 @@ type Page struct {
 
 type Response struct {
     Status bool `json:"status"`
-    Data User `json:"data"`
+    Data Action `json:"data"`
+}
+
+type Action struct {
+    Login string `json:"login"`
+    Name string `json:"name"`
+    IsLogged bool `json:"isLogged"`
+    Avatar string `json:"avatar"`
+    File string `json:"file"`
+    Size int64 `json:"size"`
 }
 
 type User struct {
@@ -176,12 +185,17 @@ func resultAction(r *http.Request) Response {
     u, err := userInfos(r)
     check(err)
     var status bool = false
+    var data Action
     a := r.URL.Query().Get("action")
     if (u.IsLogged == true) {
         switch a {
         case "login":
             u.IsLogged = true
             status = true
+            data.Login = u.Nickname
+            data.Name = u.Name
+            data.IsLogged = true
+            data.Avatar = u.Picture
         case "logout":
             u.IsLogged = false
             status = true
@@ -205,32 +219,38 @@ func resultAction(r *http.Request) Response {
             }
         case "putFile":
             path := r.URL.Query().Get("path")
-            validMedia, _ := regexp.Compile(mediaFileRegex)
-            if validMedia.MatchString(path) {
+            //validMedia, _ := regexp.Compile(mediaFileRegex)
+            //if validMedia.MatchString(path) {
                 body, err := ioutil.ReadAll(r.Body)
                 check(err)
                 dec, err := base64.StdEncoding.DecodeString(string(body))
                 check(err)
-                _, errs := os.Stat(path)
+                file, errs := os.Stat(path)
                 if os.IsNotExist(errs) {
                     f,err := os.Create(path)
                     check(err)
-                    defer f.Close()
+                    f.Close()
                 }
                 err = ioutil.WriteFile(path, dec, 0600)
                 check(err)
                 status = true
-            } else {
-                status = false
-            }
+                data.File = path
+                data.Size = file.Size()
+            //} else {
+            //    status = false
+            //}
         }
     } else {
         switch a {
         case "login":
             status = true
+            data.Login = u.Nickname
+            data.Name = u.Name
+            data.IsLogged = false
+            data.Avatar = u.Picture
         }
     }
-    return Response {Status: status, Data: *u}
+    return Response {Status: status, Data: data}
 }
 
 // Pages render
