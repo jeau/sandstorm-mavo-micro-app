@@ -16,14 +16,14 @@
     </head>
     <body>
         {{if .Access.IsLogged }}
-        <div id="microapp-menu">
+        <div id="microapp-menu" style="margin: 0;">
             <iframe src="/admin/{{.Title}}" id="microappAdminBar"></iframe>
         </div>
         {{end}}
         <div id="microapp-panel">
             <div class="microapp-toggle-button">⚙</div>
             {{.Body | safeHTML}}
-        </div>
+            </div>
         <script src="/assets/js/slideout.min.js"></script>
         <script>
             var slideout = new Slideout({

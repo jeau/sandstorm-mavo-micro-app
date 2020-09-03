@@ -10,9 +10,15 @@ body {
     float: left;
 }
 
-#microapp-menu {
+div#microapp-menu {
     background-color: darkgray;
+    margin: 0;
 }
+
+div#microapp-panel {
+    padding-left: 5px;
+}
+
 
 .slideout-menu {
   position: fixed;
