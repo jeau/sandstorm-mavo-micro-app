@@ -64,7 +64,8 @@ You can upload this spk file inside your own Sandtorm server to test it.
 This application uses the following libraries:
 
 - [Mavo](http://mavo.io/) — an HTML-based language for creating web applications without programming. 
-- [Goland](https://golang.org/) — Go pieces of code by the Go Authors and community .
+- [Goland](https://golang.org/) — Go pieces of code by the Go Authors and community.
+- [Slideout](https://github.com/Mango/slideout) — A slideout navigation menu for web apps. 
 
 The backend is inspired by the [Falafel65 PHP adaptor for Mavo](https://github.com/Falafel65/mavo-php).
 

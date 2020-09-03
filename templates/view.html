@@ -16,9 +16,27 @@
     </head>
     <body>
         {{if .Access.IsLogged }}
-        <iframe src="/admin/{{.Title}}" id="microappAdminBar"></iframe>
+        <div id="microapp-menu">
+            <iframe src="/admin/{{.Title}}" id="microappAdminBar"></iframe>
+        </div>
         {{end}}
-        {{.Body | safeHTML}}
+        <div id="microapp-panel">
+            <div class="microapp-toggle-button">⚙</div>
+            {{.Body | safeHTML}}
+        </div>
+        <script src="/assets/js/slideout.min.js"></script>
+        <script>
+            var slideout = new Slideout({
+                'panel': document.getElementById('microapp-panel'),
+                'menu': document.getElementById('microapp-menu'),
+                'padding': 256,
+                'tolerance': 70
+            });
+
+            document.querySelector('.microapp-toggle-button').addEventListener('click', function() {
+                 slideout.toggle();
+            });
+        </script>
     </body>
 </html>
 {{end}}
