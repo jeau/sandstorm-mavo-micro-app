@@ -20,7 +20,7 @@
             <iframe src="/admin/{{.Title}}" id="microappAdminBar"></iframe>
         </div>
         {{end}}
-        <div id="microapp-panel" class="islogged-{{.Access.IsLogged}} isadmin-{{.Access.IsAdmin}}">
+        <div id="microapp-panel" class="islogged-{{.Access.IsLogged}} isadmin-{{.Access.IsAdmin}}" style="margin: 0;">
             <div class="microapp-toggle-button">⚙</div>
             {{.Body | safeHTML}}
             </div>
