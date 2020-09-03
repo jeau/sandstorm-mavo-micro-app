@@ -15,7 +15,7 @@ import (
 
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
 var dataFileRegex string = "^data/[0-9a-zA-Z-._]+.(json|csv|tsv|txt|md)$"
-var mediaFileRegex string = "^(audios|images|videos)/[0-9a-zA-Z-._]+.(aac|aif|aiff|asf|avi|bmp|gif|ico|jp2|jpe|jpeg|jpg|m4a|m4v|mov|mp2|mp3|mp4|mpa|mpe|mpeg|mpg|png|tif|tiff|wav|webm|wma|wmv)$"
+var mediaFileRegex string = "^(audios|images|videos)/([^<>:;,?\"*|/]+).(aac|aif|aiff|asf|avi|bmp|gif|ico|jp2|jpe|jpeg|jpg|m4a|m4v|mov|mp2|mp3|mp4|mpa|mpe|mpeg|mpg|png|tif|tiff|wav|webm|wma|wmv)$"
 
 type Page struct {
     Title string
@@ -219,8 +219,8 @@ func resultAction(r *http.Request) Response {
             }
         case "putFile":
             path := r.URL.Query().Get("path")
-            //validMedia, _ := regexp.Compile(mediaFileRegex)
-            //if validMedia.MatchString(path) {
+            validMedia, _ := regexp.Compile(mediaFileRegex)
+            if validMedia.MatchString(path) {
                 body, err := ioutil.ReadAll(r.Body)
                 check(err)
                 dec, err := base64.StdEncoding.DecodeString(string(body))
@@ -236,9 +236,9 @@ func resultAction(r *http.Request) Response {
                 status = true
                 data.File = path
                 data.Size = file.Size()
-            //} else {
-            //    status = false
-            //}
+            } else {
+                status = false
+            }
         }
     } else {
         switch a {
