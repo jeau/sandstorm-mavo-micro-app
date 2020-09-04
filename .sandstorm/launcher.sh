@@ -22,6 +22,16 @@ if [ ! -f "/var/microapp/installok" ]; then
     rsync --recursive --ignore-existing /opt/app/videos/ /var/microapp/videos/
 fi
 
+if [ ! -D "/var/microapp/pages/HeaderContent" ]; then
+    mkdir -p /var/microapp/pages/HeaderContent
+    touch /var/microapp/pages/HeaderContent/index.html
+fi
+
+if [ ! -D "/var/microapp/pages/FooterContent" ]; then
+    mkdir -p /var/microapp/pages/FooterContent
+    touch /var/microapp/pages/FooterContent/index.html
+fi
+
 touch /var/microapp/installok
 cd /var/microapp
 exec /opt/app/microapp --data /var/microapp
