@@ -14,7 +14,8 @@
         <title>{{.Title}}</title>
     </head>
     <body>
-        <main>
+        <main id="microapp-edit">
+            <h1>{{.Title}}</h1> 
             <form action="/save/{{.Title}}" method="POST">
                 <div class="microappbuttons">
                     <input type="submit" value="Save {{.Title}}">

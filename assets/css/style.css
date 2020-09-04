@@ -10,7 +10,7 @@ body {
     float: left;
 }
 
-div#microapp-menu {
+div#microapp-menu, main##microapp-edit {
     background-color: darkgray;
     margin: 0;
 }
