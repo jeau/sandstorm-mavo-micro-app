@@ -5,20 +5,26 @@ body {
   padding:0;
 }
 
-.microapp-toggle-button {
-    font-size:3em;
-    float: left;
-}
-
-div#microapp-menu, main##microapp-edit {
+div#microapp-menu {
     background-color: darkgray;
     margin: 0;
+    height: 100%;
 }
 
 div#microapp-panel {
-    padding-left: 5px;
+    display: flex;
 }
 
+.microapp-toggle-button {
+    font-size: 3em;
+    line-height: 2em;
+    width: 5%;
+    padding: 10px;
+}
+
+div#microapp-main {
+    width: 95%;
+}
 
 .slideout-menu {
   position: fixed;
@@ -65,6 +71,11 @@ div#microapp-panel {
     border: none;
     margin: 0;
     padding: 0;
+}
+
+main#microapp-edit {
+    background-color: darkgray;
+    padding: 2% 8%;
 }
 
 div.microappbuttons input, div.microappbuttons a {

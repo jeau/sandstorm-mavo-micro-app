@@ -16,15 +16,25 @@
     </head>
     <body>
         {{if .Access.IsAdmin }}
-        <div id="microapp-menu" style="margin: 0;">
+        <div id="microapp-menu" style="margin: 0; border: none;">
             <iframe src="/admin/{{.Title}}" id="microappAdminBar"></iframe>
         </div>
-        <div id="microapp-panel" class="islogged-{{.Access.IsLogged}} isadmin-{{.Access.IsAdmin}}" style="margin: 0;">
+        <div id="microapp-panel" class="islogged-{{.Access.IsLogged}} isadmin-{{.Access.IsAdmin}}" style="margin: 0; border:none;">
+            {{end}}
             <div class="microapp-toggle-button">⚙</div>
-        {{end}}
-            {{.Body | safeHTML}}
-        {{if .Access.IsAdmin }}
+            <div class="microapp-main" style="margin: 0; border: none;">
+                <div class="microapp-header">
+                    {{if ne .Title "HeaderContent"}}{{.Header | safeHTML}}{{end}}
+                </div>
+                <div class="microapp-content" style="margin: 0; border: none;">
+                    {{.Body | safeHTML}}
+                </div>
+                <div class="microapp-footer" style="margin: 0; border: none;">
+                    {{if ne .Title "FooterContent"}}{{.Footer | safeHTML}}{{end}}
+                </div>
             </div>
+        {{if .Access.IsAdmin }}
+        </div>
         {{end}}
         <script src="/assets/js/slideout.min.js"></script>
         <script>

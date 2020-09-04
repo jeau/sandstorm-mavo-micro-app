@@ -22,6 +22,8 @@ type Page struct {
     Body  []byte
     Access User
     PagesList []string
+    Header []byte
+    Footer []byte
 }
 
 type Response struct {
@@ -118,8 +120,12 @@ func viewHandler(w http.ResponseWriter, r *http.Request, title string) {
         }
         return
     }
+    h, _ := loadPage("HeaderContent")
+    f, _ := loadPage("FooterContent")
     p.Access = *u
     p.PagesList = listPages()
+    p.Header = h.Body
+    p.Footer = f.Body
     renderTemplate(w, "view", p)
 }
 
@@ -148,7 +154,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
     u, err := userInfos(r)
     check(err)
     if u.IsAdmin {
-        if len(body) == 0 && title != "HomePage" {
+        if len(body) == 0 && (title != "HomePage" && title != "HeaderContent" && title != "FooterContent") {
             err := p.del()
             check(err)
             http.Redirect(w, r, "/view/HomePage", http.StatusFound)
