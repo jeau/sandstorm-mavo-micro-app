@@ -225,19 +225,15 @@ func resultAction(r *http.Request) Response {
                 check(err)
                 dec, err := base64.StdEncoding.DecodeString(string(body))
                 check(err)
-                file, errs := os.Stat(path)
-                if os.IsNotExist(errs) {
-                    f,err := os.Create(path)
-                    check(err)
-                    f.Close()
-                }
                 err = ioutil.WriteFile(path, dec, 0600)
+                check(err)
+                file, err := os.Stat(path)
                 check(err)
                 status = true
                 data.File = path
                 data.Size = file.Size()
             } else {
-                status = false
+              status = false
             }
         }
     } else {
