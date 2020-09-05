@@ -13,6 +13,8 @@ import (
     "encoding/base64"
 )
 
+var theCodeOfThisAppIsEditable = false 
+
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
 var dataFileRegex string = "^data/[0-9a-zA-Z-._]+.(json|csv|tsv|txt|md)$"
 var mediaFileRegex string = "^(audios|images|videos)/([^<>:;,?\"*|/]+).(aac|aif|aiff|asf|avi|bmp|gif|ico|jp2|jpe|jpeg|jpg|m4a|m4v|mov|mp2|mp3|mp4|mpa|mpe|mpeg|mpg|png|tif|tiff|wav|webm|wma|wmv)$"
@@ -57,7 +59,7 @@ func userInfos( r *http.Request) (*User, error) {
     picture := r.Header.Get("X-Sandstorm-User-Picture")
     permissions := r.Header.Get("X-Sandstorm-Permissions")
     isAuthorisedAdmin, _ := regexp.MatchString("admin", permissions)
-    isAdmin := (isAuthorisedAdmin || tab == "")
+    isAdmin := (isAuthorisedAdmin || tab == "") && theCodeOfThisAppIsEditable
     isAuthorisedUser, _ := regexp.MatchString("admin|edit", permissions)
     isLogged := (isAuthorisedUser || tab == "")
     return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged, IsAdmin: isAdmin}, nil
