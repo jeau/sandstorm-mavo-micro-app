@@ -12,18 +12,19 @@ div#microapp-menu {
 }
 
 div#microapp-panel {
-    display: flex;
+}
+
+div.microapp-action {
+    padding: 10px;
+    float: left;
 }
 
 .microapp-toggle-button {
     font-size: 3em;
     line-height: 2em;
-    width: 5%;
-    padding: 10px;
 }
 
-div#microapp-main {
-    width: 95%;
+div.microapp-main {
 }
 
 .slideout-menu {
