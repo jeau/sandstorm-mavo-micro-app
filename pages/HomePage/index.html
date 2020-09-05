@@ -1,23 +1,35 @@
 <main>
-<b>Sandstorm + Mavo:</b> a new way to create, host and share web applications. Read <a href="DocEn">english</a> or <a href="DocFr">french</a> short documentation.  
-  <div mv-app="todo" mv-storage-type="sandstorm" mv-storage="data/todo.json">
-	<header>
-		<h1>My tasks</h1>
-		<p>[count(done)] done out of [count(task)] total</p>
-      
-	</header>
 
-	<ul>
-		<li property="task" mv-multiple>
-			<label>
-				<input property="done" type="checkbox" />
-				<span property="taskTitle">Do stuff</span>
-			</label>
-		</li>
-		<button mv-action="delete(task where done)">
-			Clear Completed
-		</button>
-	</ul>
-  </div>
+    <p><b>Sandstorm + Mavo:</b> a new way to create, host and share web applications. Read <a href="DocEn">english</a> or <a href="DocFr">french</a> short documentation.</p>
+
+    <div mv-app="todo" mv-storage-type="sandstorm" mv-storage="data/todo.json">
+        <header>
+            <h1>My tasks</h1>
+            <p>[count(done)] done out of [count(task)] total</p>
+
+        </header>
+        <ul>
+            <li property="task" mv-multiple>
+                <label>
+                    <input property="done" type="checkbox" />
+                    <span property="taskTitle">Do stuff</span>
+                </label>
+            </li>
+            <button mv-action="delete(task where done)">
+                Clear Completed
+            </button>
+        </ul>
+    </div>
 
 </main>
+
+<style>
+@import url("assets/css/picnic.min.css");
+main {
+    max-width: 80%;
+    margin: 0 auto;
+}
+div {
+    margin: 20px 0;
+}
+</style>

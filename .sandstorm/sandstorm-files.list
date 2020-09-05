@@ -88,6 +88,10 @@ opt/app/images
 opt/app/images/index.html
 opt/app/microapp
 opt/app/pages
+opt/app/pages/FooterContent
+opt/app/pages/FooterContent/index.html
+opt/app/pages/HeaderContent
+opt/app/pages/HeaderContent/index.html
 opt/app/pages/HomePage
 opt/app/pages/HomePage/index.html
 opt/app/pages/ShopPaypal
