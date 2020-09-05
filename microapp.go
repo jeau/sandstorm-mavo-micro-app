@@ -13,7 +13,7 @@ import (
     "encoding/base64"
 )
 
-var theCodeOfThisAppIsEditable = false 
+var theCodeOfThisAppIsEditable = true 
 
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
 var dataFileRegex string = "^data/[0-9a-zA-Z-._]+.(json|csv|tsv|txt|md)$"
