@@ -13,7 +13,7 @@ import (
     "encoding/base64"
 )
 
-var theCodeOfThisAppIsEditable = true 
+var theCodeOfThisAppIsEditable = true
 
 var urlPathRegex string = "^/(admin|edit|save|view)/(([A-Z]+[a-z0-9]+)+)$"
 var dataFileRegex string = "^data/[0-9a-zA-Z-._]+.(json|csv|tsv|txt|md)$"
@@ -62,7 +62,14 @@ func userInfos( r *http.Request) (*User, error) {
     isAdmin := (isAuthorisedAdmin || tab == "") && theCodeOfThisAppIsEditable
     isAuthorisedUser, _ := regexp.MatchString("admin|edit", permissions)
     isLogged := (isAuthorisedUser || tab == "")
-    return &User{Nickname: nickname, Name: username, Picture: picture, Permissions: permissions, IsLogged: isLogged, IsAdmin: isAdmin}, nil
+    return &User{
+        Nickname: nickname,
+        Name: username,
+        Picture: picture,
+        Permissions: permissions,
+        IsLogged: isLogged,
+        IsAdmin: isAdmin},
+        nil
 }
 
 func check(e error) {
