@@ -19,7 +19,7 @@
         <div id="microapp-menu" style="margin: 0; border: none;">
             <iframe src="/admin/{{.Title}}" id="microappAdminBar"></iframe>
         </div>
-        <div id="microapp-panel" class="islogged-{{.Access.IsLogged}} isadmin-{{.Access.IsAdmin}}" style="margin: 0; border:none;">
+        <div id="microapp-panel" class="isAuthorisedUser-{{.Access.IsAuthorisedUser}} islogged-{{.Access.IsLogged}} isadmin-{{.Access.IsAdmin}}" style="margin: 0; border:none;">
             <div class="microapp-action" style="margin: 0; border: none; width:5%; float: left;">
                 <div class="microapp-toggle-button">⚙</div>
             </div>

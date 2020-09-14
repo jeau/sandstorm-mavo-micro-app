@@ -96,3 +96,7 @@ div.microappbuttons input, div.microappbuttons a {
 .CodeMirror {
   height: auto;
 }
+
+.isAuthorisedUser-false .mv-bar .mv-status span {
+    display: none;
+}

@@ -50,6 +50,7 @@ type User struct {
     IsLogged bool `json:"isLogged"`
     Login string `json:"login"`
     IsAdmin bool `json:"isAdmin"`
+    IsAuthorisedUser bool `json:"isAuthorisedUser"`
 }
 
 func userInfos( r *http.Request) (*User, error) {
@@ -68,7 +69,8 @@ func userInfos( r *http.Request) (*User, error) {
         Picture: picture,
         Permissions: permissions,
         IsLogged: isLogged,
-        IsAdmin: isAdmin},
+        IsAdmin: isAdmin,
+        IsAuthorisedUser: isAuthorisedUser},
         nil
 }
 
