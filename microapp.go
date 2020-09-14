@@ -78,7 +78,6 @@ func check(e error) {
     }
 }
 
-
 // Pages functions
 
 func (p *Page) save() error {

@@ -84,7 +84,6 @@ opt/app/audios
 opt/app/audios/index.html
 opt/app/data
 opt/app/data/index.html
-opt/app/data/todo.json
 opt/app/images
 opt/app/images/index.html
 opt/app/microapp
