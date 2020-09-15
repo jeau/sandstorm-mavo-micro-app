@@ -21,7 +21,8 @@
         </div>
         <div id="microapp-panel" class="isAuthorisedUser-{{.Access.IsAuthorisedUser}} islogged-{{.Access.IsLogged}} isadmin-{{.Access.IsAdmin}}" style="margin: 0; border:none;">
             <div class="microapp-action" style="margin: 0; border: none; width:5%; float: left;">
-                <div class="microapp-toggle-button">⚙</div>
+                <div class="microapp-toggle-button" title="Show admin panel">⚙</div>
+                <div class="microapp-edit-button"><a href="/edit/{{.Title}}" title="Edit the code of this page">✎</a></div>
             </div>
             <div class="microapp-main" style="margin: 0 0 0 6%; border: none;">
         {{end}}

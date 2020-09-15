@@ -24,6 +24,12 @@ div.microapp-action {
     line-height: 2em;
 }
 
+.microapp-edit-button a {
+    font-size: 2.5em;
+    line-height: 2em;
+    color: black;
+}
+
 div.microapp-main {
 }
 
